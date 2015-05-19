@@ -1,47 +1,17 @@
-package com.lpoo.pokemon.logic;
-
-import java.util.Random;
-import java.util.Scanner;
-import java.util.Vector;
-
-import com.lpoo.pokemon.TextureManager;
-import com.lpoo.pokemon.logic.Move.AILMENTS;
-import com.lpoo.pokemon.logic.Move.ELEMENTS;
-
-public class Logic {
-	
-	Vector<Pokemon> allPoke= new Vector<Pokemon>();
-	Pokemon poke1 = new Pokemon(TextureManager.FLAREON,"Flareon", ELEMENTS.FIRE, 197, 167, 156,194, 150, 156); // moltres
-	Pokemon poke2 = new Pokemon(TextureManager.BLASTOISE,"Blastoise", ELEMENTS.WATER, 151, 110, 121,112, 127, 104); // squirtle
-	Pokemon poke3 = new Pokemon(TextureManager.PIKACHU,"Pikachu", ELEMENTS.ELECTRIC, 142, 117, 90,112, 101, 156);
-	Pokemon poke4 = new Pokemon(TextureManager.LAPRAS,"Lapras", ELEMENTS.ICE, 197, 150, 167,161, 194, 150);
-
-	public Logic() {
-		fillAllPoke();
-	}
-	
-	private void fillAllPoke(){
-		allPoke.add(poke1);
-		allPoke.add(poke2);
-		allPoke.add(poke3);
-		allPoke.add(poke4);
-	}
-	
-	public Pokemon findPokemon(String nome){
-		for(int i =0;i<allPoke.size();i++)
-			if(allPoke.get(i).getName()==nome)
-				return allPoke.get(i);
-		return null;
-	}
-	
-	public void printPoke(){
-		for(int i =0;i<allPoke.size();i++){
-			if(allPoke.get(i).getName()==null)
-				System.out.println("null");
-			else
-				System.out.println(allPoke.get(i).getName());
-		}
-	}
+//package com.lpoo.pokemon.logic;
+//
+//import java.util.Random;
+//import java.util.Scanner;
+//import java.util.Vector;
+//
+//import pokemon.logic.Move;
+//import pokemon.logic.Pokemon;
+//import pokemon.logic.Trainer;
+//import pokemon.logic.Move.ELEMENTS;
+//import pokemon.logic.Move.AILMENTS;
+//
+//public class Logic {
+//
 //	public static void main(String[] args) {
 //		Scanner sc = new Scanner(System.in);
 //		int command = 0;
@@ -154,4 +124,4 @@ public class Logic {
 //			}
 //		}
 //	}
-}
+//}

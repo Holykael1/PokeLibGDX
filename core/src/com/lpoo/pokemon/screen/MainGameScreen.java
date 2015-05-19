@@ -48,9 +48,9 @@ public class MainGameScreen extends Screen {
 	public void update() {
 		cam.update();
 		if(Gdx.input.isKeyPressed(Keys.ENTER)){
-			System.out.println(trainer2.getActivePokemon().getHPLeft());
-			trainer1.getActivePokemon().Attack(trainer2.getActivePokemon(), trainer1.getActivePokemon().getMoves().get(0));
-			System.out.println(trainer2.getActivePokemon().getHPLeft());
+//			System.out.println(trainer2.getActivePokemon().getHPLeft());
+//			trainer1.getActivePokemon().Attack(trainer2.getActivePokemon(), trainer1.getActivePokemon().getMoves().get(0));
+//			System.out.println(trainer2.getActivePokemon().getHPLeft());
 			
 		}
 			
@@ -66,10 +66,10 @@ public class MainGameScreen extends Screen {
 				MainGame.WIDTH - TextureManager.BAR.getWidth() - 40, 65);
 		sb.draw(TextureManager.BAR, 65,
 				MainGame.HEIGHT - TextureManager.BAR.getHeight() - 40);
-		sb.draw(trainer1.getActivePokemon().getTexture(), 50, 50);
-		sb.draw(trainer2.getActivePokemon().getTexture(), MainGame.WIDTH
-				- TextureManager.BLASTOISE.getWidth() - 50, MainGame.HEIGHT
-				- TextureManager.BLASTOISE.getHeight() - 50);
+//		sb.draw(trainer1.getActivePokemon().getTexture(), 50, 50);
+//		sb.draw(trainer2.getActivePokemon().getTexture(), MainGame.WIDTH
+//				- TextureManager.BLASTOISE.getWidth() - 50, MainGame.HEIGHT
+//				- TextureManager.BLASTOISE.getHeight() - 50);
 		sb.end();
 	}
 
