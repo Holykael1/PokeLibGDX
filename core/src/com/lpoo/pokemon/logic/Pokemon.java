@@ -4,6 +4,10 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
 
+import com.lpoo.pokemon.logic.Move.STATS;
+import com.lpoo.pokemon.logic.Move.StatChanging;
+import com.lpoo.pokemon.logic.Move.StatusEffect;
+import com.lpoo.pokemon.logic.Move.DotComponent;
 import com.lpoo.pokemon.logic.Move.AILMENTS;
 import com.lpoo.pokemon.logic.Move.ELEMENTS;
 import com.lpoo.pokemon.logic.PokemonBase;
@@ -20,9 +24,9 @@ public class Pokemon extends PokemonBase {
 	int sleepcounter;
 
 	// Constructors
-	public Pokemon(Texture texture,String nome, ELEMENTS element, double HP, double att,
-			double def, double SPA, double SPD, double ag) {
-		this.texture=texture;
+	public Pokemon(Texture texture, String nome, ELEMENTS element, double HP,
+			double att, double def, double SPA, double SPD, double ag) {
+		this.texture = texture;
 		Name = nome;
 		moves = new Vector<Move>();
 		ElementType = element;
@@ -32,15 +36,16 @@ public class Pokemon extends PokemonBase {
 		Defense = def;
 		SpecialAttack = SPA;
 		SpecialDefense = SPD;
-		Agility = ag;
+		Speed = ag;
 		DOT_EFFECTS = new Vector<Move.DotComponent>();
 		STAT_CH_EFFECTS = new Vector<Move.StatChanging>();
 		STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
 	}
 
-	public Pokemon(Texture texture,String nome, ELEMENTS element, double HP, double att,
-			double def, double SPA, double SPD, double ag, Vector<Move> mv) {
-		this.texture=texture;
+	public Pokemon(Texture texture, String nome, ELEMENTS element, double HP,
+			double att, double def, double SPA, double SPD, double ag,
+			Vector<Move> mv) {
+		this.texture = texture;
 		Name = nome;
 		moves = mv;
 		ElementType = element;
@@ -50,30 +55,33 @@ public class Pokemon extends PokemonBase {
 		Defense = def;
 		SpecialAttack = SPA;
 		SpecialDefense = SPD;
-		Agility = ag;
+		Speed = ag;
 		DOT_EFFECTS = new Vector<Move.DotComponent>();
 		STAT_CH_EFFECTS = new Vector<Move.StatChanging>();
 		STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
 	}
 
 	// Getters
-	String getName() {
+	public String getName() {
 		return Name;
 	}
-
-	boolean getStat() {
+	
+	public Texture getTexture() {
+		return texture;
+	}
+	public boolean getStat() {
 		return active;
 	}
 
-	Vector<Move> getMoves() {
+	public Vector<Move> getMoves() {
 		return moves;
 	}
 
-	double getHPLeft() {
+	public double getHPLeft() {
 		return HitPoints;
 	}
 
-	boolean isDead() {
+	public boolean isDead() {
 		return dead;
 	}
 
@@ -91,98 +99,149 @@ public class Pokemon extends PokemonBase {
 	}
 
 	// Attack/Damage functions
-//	double Attack(Pokemon target, Move attack) {
-//		if (this.STATUS_EFFECT == Move.AILMENTS.SLEEP)
-//			return -2; // it's asleep
-//		if (this.STATUS_EFFECT == Move.AILMENTS.FREEZE)
-//			return -3; // it's frozen
-//		if (this.STATUS_EFFECT == Move.AILMENTS.PARALYZE) {
-//			Random pr = new Random();
-//			if (pr.nextInt(4) == 3)
-//				return -4; // it's fully paralyzed thus it cannot attack
-//		}
-//		if (this.STATUS_EFFECT == Move.AILMENTS.CONFUSION) {
-//			Random pr = new Random();
-//			if (pr.nextInt(2) == 1) {
-//				HitPoints -= (((2 * 50 + 10) / 250) * (Attack / this.Defense)
-//						* 50 + 2); // hurt itself in confusion
-//				return -5; // it's confused
-//			}
-//		}
-//		double damageDone = 0;
-//		Random r = new Random();
-//		int miss = r.nextInt(100) + 1;
-//		if (attack.Accuracy > miss) {
-//			switch (attack.ElementType) {
-//			case HEAL:
-//				HitPoints += (Attack * attack.BaseDamage);
-//				break;
-//			default:
-//				damageDone = CalculateAttackDamage(target, attack);
-//
-//				// check for status effects
-//				int statusmiss = r.nextInt(100) + 1;
-//				if (attack.statusInflicted.inflictChance > statusmiss)
-//					if (attack.statusInflicted.ailment != Move.AILMENTS.NEUTRAL) {
-//						switch (attack.statusInflicted.ailment) {
-//						case BURN:
-//							target.STATUS_EFFECT = Move.AILMENTS.BURN;
-//							break;
-//						case CONFUSION:
-//							target.STATUS_EFFECT = Move.AILMENTS.CONFUSION;
-//							break;
-//						case FREEZE:
-//							target.STATUS_EFFECT = Move.AILMENTS.FREEZE;
-//							break;
-//						case PARALYZE:
-//							target.STATUS_EFFECT = Move.AILMENTS.PARALYZE;
-//							break;
-//						case POISON:
-//							target.STATUS_EFFECT = Move.AILMENTS.POISON;
-//							break;
-//						case SLEEP:
-//							target.STATUS_EFFECT = Move.AILMENTS.SLEEP;
-//							break;
-//						default:
-//							break;
-//
-//						}
-//					}
-//
-//				// check for dot effects
-//				DOT_EFFECTS.add(attack.dotComponent);
-//
-//				// check for stat changing effects
-//				if (attack.statchanged.changedstat != Move.STATS.NULL) {
-//					STAT_CH_EFFECTS.add(attack.statchanged);
-//					switch (attack.statchanged.changedstat) {
-//					case ATTACK:
-//						target.Attack -= attack.statchanged.quantity;
-//						break;
-//					case DEFENSE:
-//						target.Defense -= attack.statchanged.quantity;
-//						break;
-//					case SPECIALATTACK:
-//						target.SpecialAttack -= attack.statchanged.quantity;
-//						break;
-//					case SPECIALDEFENSE:
-//						target.SpecialDefense -= attack.statchanged.quantity;
-//						break;
-//					case SPEED:
-//						target.Speed -= attack.statchanged.quantity;
-//						break;
-//					default:
-//						break;
-//					}
-//				}
-//				target.HitPoints -= damageDone;
-//				if (target.HitPoints <= 0)
-//					target.die();
-//			}
-//			return damageDone;
-//		}
-//		return -1; // attack missed if here
-//	}
+	double Attack(Pokemon target, Move attack) {
+		if (this.STATUS_EFFECT == AILMENTS.SLEEP) {
+			System.out.println(this.Name + " is asleep");
+			return -2; // it's asleep
+		}
+		if (this.STATUS_EFFECT == AILMENTS.FREEZE) {
+			System.out.println(this.Name + " is frozen");
+			return -3; // it's frozen
+		}
+		if (this.STATUS_EFFECT == AILMENTS.PARALYZE) {
+			Random pr = new Random();
+			if (pr.nextInt(4) == 3) {
+				System.out.println(this.Name
+						+ " is fully paralyzed and cannot attack");
+				return -4; // it's fully paralyzed thus it cannot attack
+			}
+		}
+		if (this.STATUS_EFFECT == AILMENTS.CONFUSION) {
+			Random pr = new Random();
+			if (pr.nextInt(2) == 1) {
+				HitPoints -= (((2 * 50 + 10) / 250) * (Attack / this.Defense)
+						* 50 + 2); // hurt itself in confusion
+				System.out.println(this.Name + " has hurt itself in confusion");
+				return -5; // it's confused
+			}
+		}
+		double damageDone = 0;
+		Random r = new Random();
+		int miss = r.nextInt(100) + 1;
+		if (attack.Accuracy > miss) {
+			switch (attack.ElementType) {
+			case HEAL:
+				HitPoints += (Attack * attack.BaseDamage);
+				break;
+			default:
+				damageDone = CalculateAttackDamage(target, attack);
+				target.HitPoints -= damageDone;
+				System.out.println(target.Name + " receives " + damageDone
+						+ " damage");
+				// check for status effects
+				int statusmiss = r.nextInt(100) + 1;
+				if (attack.statusInflicted.inflictChance > statusmiss)
+					if (attack.statusInflicted.ailment != AILMENTS.NEUTRAL) {
+						switch (attack.statusInflicted.ailment) {
+						case BURN:
+							if (target.STATUS_EFFECT == AILMENTS.SLEEP) {
+								target.sleepcounter = 0;
+							}
+							target.STATUS_EFFECT = AILMENTS.BURN;
+							System.out
+									.println(target.Name + " has been burned");
+							break;
+						case CONFUSION:
+							if (target.STATUS_EFFECT == AILMENTS.SLEEP) {
+								target.sleepcounter = 0;
+							}
+							target.STATUS_EFFECT = AILMENTS.CONFUSION;
+							System.out.println(target.Name + " is confused");
+							break;
+						case FREEZE:
+							if (target.STATUS_EFFECT == AILMENTS.SLEEP) {
+								target.sleepcounter = 0;
+							}
+							target.STATUS_EFFECT = AILMENTS.FREEZE;
+							System.out.println(target.Name + " is frozen");
+							break;
+						case PARALYZE:
+							if (target.STATUS_EFFECT == AILMENTS.SLEEP) {
+								target.sleepcounter = 0;
+							}
+							target.STATUS_EFFECT = AILMENTS.PARALYZE;
+							System.out.println(target.Name
+									+ " has been paralyzed");
+							break;
+						case POISON:
+							if (target.STATUS_EFFECT == AILMENTS.SLEEP) {
+								target.sleepcounter = 0;
+							}
+							target.STATUS_EFFECT = AILMENTS.POISON;
+							System.out.println(target.Name
+									+ " has been poisoned");
+							break;
+						case SLEEP:
+							if (target.STATUS_EFFECT == AILMENTS.SLEEP) {
+								target.sleepcounter = 0;
+							}
+							target.STATUS_EFFECT = AILMENTS.SLEEP;
+							target.sleepcounter = r.nextInt(4) + 1;
+							System.out.println(target.Name + " is asleep");
+							break;
+						default:
+							break;
+
+						}
+					}
+
+				// check for dot effects
+				DOT_EFFECTS.add(attack.dotComponent);
+
+				// check for stat changing effects
+				if (attack.statchanged.changedstat != STATS.NULL) {
+					STAT_CH_EFFECTS.add(attack.statchanged);
+					switch (attack.statchanged.changedstat) {
+					case ATTACK:
+						target.Attack -= attack.statchanged.quantity;
+						System.out.println(target.Name
+								+ "'s attack has been reduced");
+						break;
+					case DEFENSE:
+						target.Defense -= attack.statchanged.quantity;
+						System.out.println(target.Name
+								+ "'s defense has been reduced");
+						break;
+					case SPECIALATTACK:
+						target.SpecialAttack -= attack.statchanged.quantity;
+						System.out.println(target.Name
+								+ "'s specialattack has been reduced");
+						break;
+					case SPECIALDEFENSE:
+						target.SpecialDefense -= attack.statchanged.quantity;
+						System.out.println(target.Name
+								+ "'s specialdefense has been reduced");
+						break;
+					case SPEED:
+						target.Speed -= attack.statchanged.quantity;
+						System.out.println(target.Name
+								+ "'speed has been reduced");
+						break;
+					default:
+						break;
+					}
+				}
+
+				if (target.HitPoints <= 0) {
+					target.die();
+					System.out.println(target.Name + " has fainted");
+				}
+			}
+			return damageDone;
+		}
+		System.out.println(this.Name + " has missed");
+		return -1; // attack missed if here
+	}
 
 	// http://bulbapedia.bulbagarden.net/wiki/Damage formulas
 	double CalculateAttackDamage(Pokemon target, Move attack2) {
@@ -212,7 +271,6 @@ public class Pokemon extends PokemonBase {
 					* (SpecialAttack / target.SpecialDefense)
 					* attack2.BaseDamage + 2)
 					* modifier * 7.75;
-		System.out.println(damage);
 		return damage;
 	}
 
@@ -323,68 +381,99 @@ public class Pokemon extends PokemonBase {
 	}
 
 	void updatePokemonAfterTurn() {
-//		if (this.active) {
-//			// Handle DOTS
-//			for (Move.DotComponent dot : DOT_EFFECTS) {
-//				this.HitPoints-=dot.DamagePerTurn;
-//				dot.duration--;
-//				if(dot.duration<=0)
-//					DOT_EFFECTS.remove(dot);
-//			}
+		if (this.active) {
+			// Handle DOTS
+			for (int i = 0; i < DOT_EFFECTS.size(); i++) {
+				if (DOT_EFFECTS.get(i).duration <= 0) {
+					DOT_EFFECTS.remove(i);
+				} else {
+					this.HitPoints -= DOT_EFFECTS.get(i).DamagePerTurn;
+					System.out.println("Damage Over time Effect dealt "
+							+ DOT_EFFECTS.get(i).DamagePerTurn + " to"
+							+ this.Name);
+					DOT_EFFECTS.get(i).duration--;
+				}
+			}
+
 			// Handle STAT_CH_EFFECTS
-//			for (Move.StatChanging stch : STAT_CH_EFFECTS) {
-//				stch.duration--;
-//				if(stch.duration<=0){
-//					switch(stch.changedstat){
-//					case ATTACK:
-//						this.Attack+=stch.quantity;
-//						STAT_CH_EFFECTS.remove(stch);
-//						break;
-//					case DEFENSE:
-//						this.Defense+=stch.quantity;
-//						STAT_CH_EFFECTS.remove(stch);
-//						break;
-//					case SPECIALATTACK:
-//						this.SpecialAttack+=stch.quantity;
-//						STAT_CH_EFFECTS.remove(stch);
-//						break;
-//					case SPECIALDEFENSE:
-//						this.SpecialDefense+=stch.quantity;
-//						STAT_CH_EFFECTS.remove(stch);
-//						break;
-//					case SPEED:
-//						this.Speed+=stch.quantity;
-//						STAT_CH_EFFECTS.remove(stch);
-//						break;
-//					default:
-//						break;
-//						
-//					}
-//				}
-//			}
-			// Handle
+			for (int i = 0; i < STAT_CH_EFFECTS.size(); i++) {
+				if (STAT_CH_EFFECTS.get(i).duration <= 0) {
+					switch (STAT_CH_EFFECTS.get(i).changedstat) {
+					case ATTACK:
+						this.Attack += STAT_CH_EFFECTS.get(i).quantity;
+						System.out.println(this.Name
+								+ " attack stat has returned to normal");
+						STAT_CH_EFFECTS.remove(i);
+						break;
+					case DEFENSE:
+						this.Defense += STAT_CH_EFFECTS.get(i).quantity;
+						System.out.println(this.Name
+								+ " defense stat has returned to normal");
+						STAT_CH_EFFECTS.remove(i);
+						break;
+					case SPECIALATTACK:
+						this.SpecialAttack += STAT_CH_EFFECTS.get(i).quantity;
+						System.out
+								.println(this.Name
+										+ " special attack stat has returned to normal");
+						STAT_CH_EFFECTS.remove(i);
+						break;
+					case SPECIALDEFENSE:
+						this.SpecialDefense += STAT_CH_EFFECTS.get(i).quantity;
+						System.out
+								.println(this.Name
+										+ " special defense stat has returned to normal");
+						STAT_CH_EFFECTS.remove(i);
+						break;
+					case SPEED:
+						this.Speed += STAT_CH_EFFECTS.get(i).quantity;
+						System.out.println(this.Name
+								+ " speed stat has returned to normal");
+						STAT_CH_EFFECTS.remove(i);
+						break;
+					default:
+						break;
+
+					}
+
+				} else
+					STAT_CH_EFFECTS.get(i).duration--;
+			}
+
+			// Handle status effects
 			switch (this.STATUS_EFFECT) {
 			case BURN:
 				this.HitPoints -= MaxHitPoints / 8;
-				if (HitPoints <= 0)
+				System.out.println(this.Name + " feels the burn");
+				if (HitPoints <= 0) {
+					System.out.println(this.Name + " has died");
 					this.die();
+				}
 				break;
 			// See if freeze remains
 			case FREEZE:
 				Random stopfreeze = new Random();
 				if (stopfreeze.nextInt(5) == 4) {
-					this.STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
+					this.STATUS_EFFECT = AILMENTS.NEUTRAL;
+					System.out.println(this.Name + " is no longer frozen");
 				}
 				break;
 			case POISON:
 				this.HitPoints -= MaxHitPoints / 16;
-				if (HitPoints <= 0)
+				System.out.println(this.Name + " receives poison damage");
+				if (HitPoints <= 0) {
+					System.out.println(this.Name + " has died");
 					this.die();
+				}
 				break;
 			case SLEEP:
-				if(sleepcounter<=0)
-					this.STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
-				else sleepcounter--;
+				if (sleepcounter <= 0) {
+					this.STATUS_EFFECT = AILMENTS.NEUTRAL;
+					System.out.println(this.Name + " is no longer asleep");
+				} else {
+					sleepcounter--;
+					System.out.println(this.Name + " is still sleeping");
+				}
 				break;
 			default:
 				break;
@@ -392,4 +481,11 @@ public class Pokemon extends PokemonBase {
 			}
 		}
 	}
-//}
+
+	public double getMaxHp() {
+		return MaxHitPoints;
+	}
+
+	
+
+}

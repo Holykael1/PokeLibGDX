@@ -69,18 +69,18 @@ public class MainMenuScreen extends Screen implements TextInputListener {
 	@Override
 	public void update() {
 		cam.update();
-		if (Gdx.input.isKeyPressed(Keys.W))
+		if (Gdx.input.isKeyJustPressed(Keys.W))
 			if (currentItem > 0)
 				currentItem--;
 			else 
 				currentItem=menuItems.length-1;
-		if (Gdx.input.isKeyPressed(Keys.S))
+		if (Gdx.input.isKeyJustPressed(Keys.S))
 			if (currentItem < menuItems.length - 1)
 				currentItem++;
 			else 
 				//wait x miliseconds tog et input
 				currentItem=0;
-		 if(Gdx.input.isKeyPressed(Keys.ENTER))
+		 if(Gdx.input.isKeyJustPressed(Keys.ENTER))
 		 select();
 	}
 

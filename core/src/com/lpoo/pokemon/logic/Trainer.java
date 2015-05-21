@@ -18,14 +18,14 @@ public class Trainer {
 	}
 	
 	//Getters
-	Pokemon getActivePokemon(){ 
+	public Pokemon getActivePokemon(){ 
 		for(int i=0;i<team.size();i++)
 			if(team.get(i).getStat())
 				return team.get(i);
 		
 		return null;
 	}
-	String getName(){
+	public String getName(){
 		return Name;
 	}
 	void setName(String name){
@@ -43,7 +43,7 @@ public class Trainer {
 			poke.changeStat(false);
 		team.addElement(poke);
 	}
-	void changePokemon(){ 
+	public void changePokemon(){ 
 		if(team.get(0).getStat()){
 			team.get(1).changeStat(true);
 			team.get(0).changeStat(false);
@@ -55,7 +55,7 @@ public class Trainer {
 	}
 	
 	//Checks
-	boolean TrainerLost(){ 
+	public boolean TrainerLost(){ 
 		if(team.get(0).isDead()&&team.get(1).isDead()){
 			return true;
 		}
