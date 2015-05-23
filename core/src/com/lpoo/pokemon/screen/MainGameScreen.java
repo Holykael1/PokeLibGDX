@@ -43,7 +43,7 @@ public class MainGameScreen extends Screen {
 		test = new Elements();
 
 		// test.printPoke();
-		Gdx.input.setInputProcessor(stage = new Stage());
+		stage = new Stage();
 		poke1 = test.findPokemon("Flareon");
 		poke2 = test.findPokemon("Blastoise");
 		poke3 = test.findPokemon("Pikachu");
