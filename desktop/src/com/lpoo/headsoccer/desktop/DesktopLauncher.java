@@ -5,7 +5,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 //import com.lpoo.pokemon.Animator;
 import com.lpoo.pokemon.MainGame;
-import com.lpoo.pokemon.screen.GameScreen;
+
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {

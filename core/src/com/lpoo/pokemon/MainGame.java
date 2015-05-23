@@ -4,7 +4,6 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.lpoo.pokemon.screen.GameScreen;
 import com.lpoo.pokemon.screen.MainGameScreen;
 import com.lpoo.pokemon.screen.MainMenuScreen;
 import com.lpoo.pokemon.screen.ScreenManager;
@@ -36,7 +35,7 @@ public class MainGame implements ApplicationListener {
 
 	@Override
 	public void render() {
-		Gdx.gl.glClearColor(0,0,0,1);
+		Gdx.gl.glClearColor(0,0,0,1); 
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		if(ScreenManager.getCurrentScreen()!=null)
