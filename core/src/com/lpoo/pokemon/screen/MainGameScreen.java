@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Affine2;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.lpoo.pokemon.MainGame;
@@ -24,14 +25,16 @@ import com.lpoo.pokemon.logic.Trainer;
 import com.lpoo.bar.ProgressBar;
 import com.lpoo.bar.ProgressBar.ProgressBarStyle;
 
-public class MainGameScreen extends Screen implements TextInputListener {
+public class MainGameScreen extends Screen {
 	OrthoCamera cam;
 	Trainer trainer1, trainer2;
 	Pokemon poke1, poke2, poke3, poke4;
 	Move move1, move2, move3, move4, move5, move6, move7, move8;
 	Elements test;
-	ProgressBar bar,bar2;
-	Sprite pok1,pok2;
+	ProgressBar bar, bar2;
+	Sprite pok1, pok2;
+	Stage stage;
+
 	@Override
 	public void create() {
 		cam = new OrthoCamera();
@@ -40,7 +43,7 @@ public class MainGameScreen extends Screen implements TextInputListener {
 		test = new Elements();
 
 		// test.printPoke();
-
+		Gdx.input.setInputProcessor(stage = new Stage());
 		poke1 = test.findPokemon("Flareon");
 		poke2 = test.findPokemon("Blastoise");
 		poke3 = test.findPokemon("Pikachu");
@@ -48,7 +51,7 @@ public class MainGameScreen extends Screen implements TextInputListener {
 
 		trainer1 = new Trainer("Raul");
 		trainer2 = new Trainer("Manel");
-		
+
 		trainer1.addPokemon(poke1);
 		trainer1.addPokemon(poke2);
 		trainer2.addPokemon(poke3);
@@ -72,47 +75,46 @@ public class MainGameScreen extends Screen implements TextInputListener {
 						Gdx.files.internal("green_knob.jpg")), 1, 10));
 		ProgressBarStyle barStyle = new ProgressBarStyle(skin.newDrawable(
 				"white", Color.DARK_GRAY), textureBar);
-	
-		
-		//Progress Bars
-		
-		//bar
-		bar = new ProgressBar(0, (float) trainer1
-				.getActivePokemon().getMaxHp(), 1, false, barStyle);
+
+		// Progress Bars
+
+		// bar
+		bar = new ProgressBar(0,
+				(float) trainer1.getActivePokemon().getMaxHp(), 1, false,
+				barStyle);
 		bar.setValue(bar.getMaxValue());
 		bar.setSize(250, 25);
-		
-		bar.setPosition((float) (pok1.getX() + pok1.getWidth()*1.5),
-				pok1.getY() + pok1.getHeight() / 2);
-		
-		
-		//bar2
-		bar2 = new ProgressBar(0, (float) trainer2
-				.getActivePokemon().getMaxHp(), 1, false, barStyle);
-		
-		bar2.setValue(30);
+		bar.setAnimateInterpolation(Interpolation.linear);
+		bar.setAnimateDuration(0.75f);
 
-		
+		bar.setPosition((float) (pok1.getX() + pok1.getWidth() * 1.5),
+				pok1.getY() + pok1.getHeight() / 2);
+
+		// bar2
+		bar2 = new ProgressBar(0, (float) trainer2.getActivePokemon()
+				.getMaxHp(), 1, false, barStyle);
+
+		bar2.setValue(30);
+		bar2.setAnimateInterpolation(Interpolation.linear);
+		bar2.setAnimateDuration(0.75f);
 		bar2.setSize(250, 25);
-		bar2.setPosition((float) (pok2.getX()-pok2.getWidth()*1.5), pok2.getY()+pok2.getHeight()/2);
-		
+		bar2.setPosition((float) (pok2.getX() - pok2.getWidth() * 1.5),
+				pok2.getY() + pok2.getHeight() / 2);
+
+		stage.addActor(bar);
+		stage.addActor(bar2);
 	}
 
 	@Override
 	public void update() {
 		cam.update();
-		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
-			System.out.println(trainer2.getActivePokemon().getHPLeft());
-			// trainer1.getActivePokemon().Attack(trainer2.getActivePokemon(),
-			// trainer1.getActivePokemon().getMoves().get(0));
-			// System.out.println(trainer2.getActivePokemon().getHPLeft());
-			bar.setValue(10);
-			bar2.setValue(10);
-			pok2.setPosition(300,300);
-
-		}
+		bar.setValue(10);
+		bar2.setValue(20);
+		pok2.setPosition(300, 300);
 
 	}
+
+	float time, duration = 1;
 
 	@Override
 	public void render(SpriteBatch sb) {
@@ -120,32 +122,35 @@ public class MainGameScreen extends Screen implements TextInputListener {
 		sb.setProjectionMatrix(cam.combined);
 		sb.begin();
 
-	
-
 		// background
-		
+
 		sb.draw(TextureManager.BATTLEBACK, 0, 0);
 		// Pokemon1
-		
-		
-	
+
 		pok1.draw(sb);
 
 		// Pokemon2
-		
-		
+
 		pok2.draw(sb);
 
-		// Progress Bar pokemon 1 rendering
-	
-		bar.draw(sb, 1);
+		// Progress Bar RENDERING
+
+		float delta = Gdx.graphics.getDeltaTime();
+
+		if ((time += delta) > duration) {
+			bar.setValue(bar.getValue());
+			bar2.setValue(bar2.getValue());
+			time = 0;
+		}
+
+		stage.act(delta);
+		stage.draw();
+
 		
-		// Progress Bar pokemon 2 rendering
-		bar2.draw(sb,1);
 		sb.end();
 	}
 
-	@Override	
+	@Override
 	public void resize(int width, int height) {
 		cam.resize();
 	}
@@ -166,18 +171,6 @@ public class MainGameScreen extends Screen implements TextInputListener {
 	public void resume() {
 		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public void canceled() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void input(String arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
