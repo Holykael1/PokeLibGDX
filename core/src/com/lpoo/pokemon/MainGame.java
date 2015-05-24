@@ -10,51 +10,53 @@ import com.lpoo.pokemon.screen.ScreenManager;
 
 public class MainGame implements ApplicationListener {
 
-	public static int WIDTH=1280,HEIGHT=720;
+	public static int WIDTH = 1280, HEIGHT = 720;
 	private SpriteBatch batch;
-	
+
 	@Override
 	public void create() {
-		batch=new SpriteBatch();
+		batch = new SpriteBatch();
 		ScreenManager.setScreen(new MainGameScreen());
 	}
 
 	@Override
 	public void dispose() {
-		if(ScreenManager.getCurrentScreen()!=null)
+		if (ScreenManager.getCurrentScreen() != null)
 			ScreenManager.getCurrentScreen().dispose();
 		batch.dispose();
 	}
 
 	@Override
 	public void pause() {
-		if(ScreenManager.getCurrentScreen()!=null)
+		if (ScreenManager.getCurrentScreen() != null)
 			ScreenManager.getCurrentScreen().pause();
 
 	}
 
 	@Override
 	public void render() {
-		Gdx.gl.glClearColor(0,0,0,1); 
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-		if(ScreenManager.getCurrentScreen()!=null)
+
+		if (ScreenManager.getCurrentScreen() != null)
 			ScreenManager.getCurrentScreen().update();
-		
-		if(ScreenManager.getCurrentScreen()!=null)
-			ScreenManager.getCurrentScreen().render(batch);
-		
+
+		if (ScreenManager.getCurrentScreen() != null)
+			if (ScreenManager.getCurrentScreen() instanceof MainGameScreen)
+				ScreenManager.getCurrentScreen().render();
+			else
+				ScreenManager.getCurrentScreen().render(batch);
 	}
 
 	@Override
 	public void resize(int arg0, int arg1) {
-		if(ScreenManager.getCurrentScreen()!=null)
+		if (ScreenManager.getCurrentScreen() != null)
 			ScreenManager.getCurrentScreen().resize(WIDTH, WIDTH);
 	}
 
 	@Override
 	public void resume() {
-		if(ScreenManager.getCurrentScreen()!=null)
+		if (ScreenManager.getCurrentScreen() != null)
 			ScreenManager.getCurrentScreen().resume();
 
 	}

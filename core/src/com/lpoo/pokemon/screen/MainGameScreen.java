@@ -7,13 +7,18 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Affine2;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.lpoo.pokemon.MainGame;
 import com.lpoo.pokemon.TextureManager;
@@ -22,10 +27,15 @@ import com.lpoo.pokemon.logic.Elements;
 import com.lpoo.pokemon.logic.Move;
 import com.lpoo.pokemon.logic.Pokemon;
 import com.lpoo.pokemon.logic.Trainer;
-import com.lpoo.bar.ProgressBar;
-import com.lpoo.bar.ProgressBar.ProgressBarStyle;
+import com.lpoo.pokemon.utilities.ProgressBar;
+import com.lpoo.pokemon.utilities.ProgressBar.ProgressBarStyle;
+import com.lpoo.pokemon.utilities.SmartFontGenerator;
 
 public class MainGameScreen extends Screen {
+	enum GameState {
+		PLAYER1T, PLAYER2T, AFTERTURNS
+	}
+	BitmapFont tittleFont;
 	OrthoCamera cam;
 	Trainer trainer1, trainer2;
 	Pokemon poke1, poke2, poke3, poke4;
@@ -34,16 +44,17 @@ public class MainGameScreen extends Screen {
 	ProgressBar bar, bar2;
 	Sprite pok1, pok2;
 	Stage stage;
-
+	GameState gamestate;
+	Dialog p1,p2;
 	@Override
 	public void create() {
 		cam = new OrthoCamera();
 		cam.resize();
 
 		test = new Elements();
-
+		gamestate = GameState.PLAYER1T;
 		// test.printPoke();
-		stage = new Stage();
+
 		poke1 = test.findPokemon("Flareon");
 		poke2 = test.findPokemon("Blastoise");
 		poke3 = test.findPokemon("Pikachu");
@@ -56,15 +67,17 @@ public class MainGameScreen extends Screen {
 		trainer1.addPokemon(poke2);
 		trainer2.addPokemon(poke3);
 		trainer2.addPokemon(poke4);
+
 		pok1 = new Sprite(trainer1.getActivePokemon().getTexture());
 		pok1.flip(true, false);
 		pok1.setPosition(50, 50);
+
 		pok2 = new Sprite(trainer2.getActivePokemon().getTexture());
 		if (trainer2.getActivePokemon().getName() == "Blastoise")
 			pok2.flip(true, false);
 		pok2.setPosition(MainGame.WIDTH - pok2.getWidth(), MainGame.HEIGHT
 				- pok2.getHeight());
-		// Progress Bar Settings
+
 		Skin skin = new Skin();
 		Pixmap pixmap = new Pixmap(10, 10, Format.RGBA8888);
 		pixmap.setColor(Color.WHITE);
@@ -73,9 +86,43 @@ public class MainGameScreen extends Screen {
 		TextureRegionDrawable textureBar = new TextureRegionDrawable(
 				new TextureRegion(new Texture(
 						Gdx.files.internal("green_knob.jpg")), 1, 10));
+		
+		
+		
+		// Option Menus
+		TextureRegionDrawable texturebar = new TextureRegionDrawable(
+				new TextureRegion(TextureManager.BACKGROUND, 1, 10));
+		SmartFontGenerator fontGen = new SmartFontGenerator();
+		tittleFont = fontGen.createFont(Gdx.files.internal("PokemonTitle.fnt"),"PokemonTitle",24);
+		Label.LabelStyle titleStyle = new Label.LabelStyle();
+		titleStyle.font = tittleFont;
+
+		Label small = new Label("Title Font", titleStyle);
+
+		WindowStyle ws = new WindowStyle(tittleFont,Color.WHITE,texturebar);
+		p1 = new Dialog("Choose Wisely",ws);
+		p1.setSize(100, 100);
+		p1.setPosition(MainGame.WIDTH - p1.getWidth(), p1.getHeight()+50);
+		
+		
+		
+		
+		
+		
+		
+		
+		// Progress Bar Settings
+		
+		
 		ProgressBarStyle barStyle = new ProgressBarStyle(skin.newDrawable(
 				"white", Color.DARK_GRAY), textureBar);
 
+		
+		
+		
+		
+		
+		
 		// Progress Bars
 
 		// bar
@@ -86,7 +133,6 @@ public class MainGameScreen extends Screen {
 		bar.setSize(250, 25);
 		bar.setAnimateInterpolation(Interpolation.linear);
 		bar.setAnimateDuration(0.75f);
-
 		bar.setPosition((float) (pok1.getX() + pok1.getWidth() * 1.5),
 				pok1.getY() + pok1.getHeight() / 2);
 
@@ -101,37 +147,32 @@ public class MainGameScreen extends Screen {
 		bar2.setPosition((float) (pok2.getX() - pok2.getWidth() * 1.5),
 				pok2.getY() + pok2.getHeight() / 2);
 
+		stage = new Stage();
 		stage.addActor(bar);
 		stage.addActor(bar2);
+		stage.addActor(p1);
 	}
 
 	@Override
 	public void update() {
 		cam.update();
-		bar.setValue(10);
-		bar2.setValue(20);
-		pok2.setPosition(300, 300);
+		bar.setValue(30);
 
 	}
 
 	float time, duration = 1;
 
 	@Override
-	public void render(SpriteBatch sb) {
+	public void render() {
 
-		sb.setProjectionMatrix(cam.combined);
-		sb.begin();
-
-		// background
-
-		sb.draw(TextureManager.BATTLEBACK, 0, 0);
-		// Pokemon1
-
-		pok1.draw(sb);
-
-		// Pokemon2
-
-		pok2.draw(sb);
+		stage.getBatch().setProjectionMatrix(cam.combined);
+		stage.getBatch().begin();
+		// background and pokemons
+		stage.getBatch().draw(TextureManager.BATTLEBACK, 0, 0);
+		pok1.draw(stage.getBatch());
+		pok2.draw(stage.getBatch());
+		
+		
 
 		// Progress Bar RENDERING
 
@@ -140,14 +181,14 @@ public class MainGameScreen extends Screen {
 		if ((time += delta) > duration) {
 			bar.setValue(bar.getValue());
 			bar2.setValue(bar2.getValue());
+
 			time = 0;
 		}
 
 		stage.act(delta);
+		stage.getBatch().end();
 		stage.draw();
 
-		
-		sb.end();
 	}
 
 	@Override
@@ -169,6 +210,12 @@ public class MainGameScreen extends Screen {
 
 	@Override
 	public void resume() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void render(SpriteBatch sb) {
 		// TODO Auto-generated method stub
 
 	}
