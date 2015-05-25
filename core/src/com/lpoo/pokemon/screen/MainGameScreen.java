@@ -29,7 +29,6 @@ import com.lpoo.pokemon.logic.Pokemon;
 import com.lpoo.pokemon.logic.Trainer;
 import com.lpoo.pokemon.utilities.ProgressBar;
 import com.lpoo.pokemon.utilities.ProgressBar.ProgressBarStyle;
-import com.lpoo.pokemon.utilities.SmartFontGenerator;
 
 public class MainGameScreen extends Screen {
 	enum GameState {
@@ -90,21 +89,7 @@ public class MainGameScreen extends Screen {
 		
 		
 		// Option Menus
-		TextureRegionDrawable texturebar = new TextureRegionDrawable(
-				new TextureRegion(TextureManager.BACKGROUND, 1, 10));
-		SmartFontGenerator fontGen = new SmartFontGenerator();
-		tittleFont = fontGen.createFont(Gdx.files.internal("PokemonTitle.fnt"),"PokemonTitle",24);
-		Label.LabelStyle titleStyle = new Label.LabelStyle();
-		titleStyle.font = tittleFont;
-
-		Label small = new Label("Title Font", titleStyle);
-
-		WindowStyle ws = new WindowStyle(tittleFont,Color.WHITE,texturebar);
-		p1 = new Dialog("Choose Wisely",ws);
-		p1.setSize(100, 100);
-		p1.setPosition(MainGame.WIDTH - p1.getWidth(), p1.getHeight()+50);
-		
-		
+	
 		
 		
 		
@@ -150,7 +135,7 @@ public class MainGameScreen extends Screen {
 		stage = new Stage();
 		stage.addActor(bar);
 		stage.addActor(bar2);
-		stage.addActor(p1);
+
 	}
 
 	@Override
