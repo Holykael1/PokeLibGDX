@@ -14,9 +14,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Affine2;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -34,6 +38,7 @@ public class MainGameScreen extends Screen {
 	enum GameState {
 		PLAYER1T, PLAYER2T, AFTERTURNS
 	}
+
 	BitmapFont tittleFont;
 	OrthoCamera cam;
 	Trainer trainer1, trainer2;
@@ -44,7 +49,12 @@ public class MainGameScreen extends Screen {
 	Sprite pok1, pok2;
 	Stage stage;
 	GameState gamestate;
-	Dialog p1,p2;
+	Dialog p1, p2;
+	TextButton buttonChange2;
+	TextButton buttonAttack2;
+	TextButton buttonChange;
+	TextButton buttonAttack;
+	Table tableUI,tableUI2;
 	@Override
 	public void create() {
 		cam = new OrthoCamera();
@@ -85,29 +95,41 @@ public class MainGameScreen extends Screen {
 		TextureRegionDrawable textureBar = new TextureRegionDrawable(
 				new TextureRegion(new Texture(
 						Gdx.files.internal("green_knob.jpg")), 1, 10));
-		
-		
-		
+
 		// Option Menus
-	
 		
-		
-		
-		
-		
-		
+		tableUI = new Table();
+		tableUI2 = new Table();
+		Skin uiSkin = new Skin(Gdx.files.internal("uiskin.json"));
+		TextureRegionDrawable texturebar = new TextureRegionDrawable(
+				new TextureRegion(TextureManager.BACKGROUND, 1, 10));
+		BitmapFont font = new BitmapFont();
+		LabelStyle ls = new LabelStyle(font, Color.WHITE);
+		Label pl1 = new Label(trainer1.getName(), ls);
+		Label pl2 = new Label(trainer2.getName(), ls);
+		buttonAttack = new TextButton("Attack", uiSkin);	
+		buttonChange = new TextButton("Change Pokemon", uiSkin);
+		buttonAttack2 = new TextButton("Attack", uiSkin);	
+		buttonChange2 = new TextButton("Change Pokemon", uiSkin);
+		tableUI.setPosition(tableUI.getWidth()-100,tableUI.getHeight()+ 100);
+		tableUI.add(pl1).padBottom(5).row();
+		tableUI.add(buttonChange).size(150,60).padBottom(10).row();
+		tableUI.add(buttonAttack).size(150,60).padBottom(10).row();
+	    tableUI.setFillParent(true);
+	    tableUI.bottom().right();
+	    tableUI2.setPosition(tableUI.getWidth()+100,tableUI.getHeight()-40);
+	    tableUI2.add(pl2).padBottom(5).row();
+		tableUI2.add(buttonChange2).size(150,60).padBottom(10).row();
+		tableUI2.add(buttonAttack2).size(150,60).padBottom(10).row();
+		tableUI2.setFillParent(true);
+		tableUI2.top().left();
+	   
+
 		// Progress Bar Settings
-		
-		
+
 		ProgressBarStyle barStyle = new ProgressBarStyle(skin.newDrawable(
 				"white", Color.DARK_GRAY), textureBar);
 
-		
-		
-		
-		
-		
-		
 		// Progress Bars
 
 		// bar
@@ -135,7 +157,8 @@ public class MainGameScreen extends Screen {
 		stage = new Stage();
 		stage.addActor(bar);
 		stage.addActor(bar2);
-
+		stage.addActor(tableUI);
+		stage.addActor(tableUI2);
 	}
 
 	@Override
@@ -156,8 +179,6 @@ public class MainGameScreen extends Screen {
 		stage.getBatch().draw(TextureManager.BATTLEBACK, 0, 0);
 		pok1.draw(stage.getBatch());
 		pok2.draw(stage.getBatch());
-		
-		
 
 		// Progress Bar RENDERING
 
