@@ -24,7 +24,7 @@ public class Pokemon extends PokemonBase {
 	int sleepcounter;
 
 	// Constructors
-	public Pokemon(Texture texture, String nome, ELEMENTS element, double HP,
+	public Pokemon(Texture texture, String nome, ELEMENTS element, double HP, 
 			double att, double def, double SPA, double SPD, double ag) {
 		this.texture = texture;
 		Name = nome;
@@ -40,9 +40,10 @@ public class Pokemon extends PokemonBase {
 		DOT_EFFECTS = new Vector<Move.DotComponent>();
 		STAT_CH_EFFECTS = new Vector<Move.StatChanging>();
 		STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
+		active=false;
 	}
 
-	public Pokemon(Texture texture, String nome, ELEMENTS element, double HP,
+	public Pokemon(Texture texture, String nome, ELEMENTS element, double HP, 
 			double att, double def, double SPA, double SPD, double ag,
 			Vector<Move> mv) {
 		this.texture = texture;
@@ -59,16 +60,18 @@ public class Pokemon extends PokemonBase {
 		DOT_EFFECTS = new Vector<Move.DotComponent>();
 		STAT_CH_EFFECTS = new Vector<Move.StatChanging>();
 		STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
+		active=false; 
 	}
-
+ 
 	// Getters
 	public String getName() {
 		return Name;
 	}
-	
+
 	public Texture getTexture() {
 		return texture;
 	}
+
 	public boolean getStat() {
 		return active;
 	}
@@ -86,20 +89,20 @@ public class Pokemon extends PokemonBase {
 	}
 
 	// Modifiers
-	void changeStat(boolean stat) {
+	void changeStat(boolean stat) { 
 		active = stat;
 	}
 
-	void addAttack(Move move) {
+	public void addAttack(Move move) {
 		moves.add(move);
 	}
 
-	void die() {
+	void die() { 
 		dead = true;
 	}
 
 	// Attack/Damage functions
-	double Attack(Pokemon target, Move attack) {
+	public double Attack(Pokemon target, Move attack) { 
 		if (this.STATUS_EFFECT == AILMENTS.SLEEP) {
 			System.out.println(this.Name + " is asleep");
 			return -2; // it's asleep
@@ -122,7 +125,12 @@ public class Pokemon extends PokemonBase {
 				HitPoints -= (((2 * 50 + 10) / 250) * (Attack / this.Defense)
 						* 50 + 2); // hurt itself in confusion
 				System.out.println(this.Name + " has hurt itself in confusion");
+				if (HitPoints <= 0) {
+					System.out.println(this.Name + " has died");
+					this.die();
+				}
 				return -5; // it's confused
+			
 			}
 		}
 		double damageDone = 0;
@@ -380,7 +388,7 @@ public class Pokemon extends PokemonBase {
 		}
 	}
 
-	void updatePokemonAfterTurn() {
+	public void updatePokemonAfterTurn() { 
 		if (this.active) {
 			// Handle DOTS
 			for (int i = 0; i < DOT_EFFECTS.size(); i++) {
@@ -486,6 +494,14 @@ public class Pokemon extends PokemonBase {
 		return MaxHitPoints;
 	}
 
-	
-
+	public Move findMove(String command) {
+		for (int i = 0; i < this.getMoves().size(); i++) {
+			if (this.getMoves().get(i).getName().equals(command))
+				return this.getMoves().get(i);
+		}
+		return null;
+	}
+	public double getSpeed(){
+		return this.Speed;
+	}
 }

@@ -25,6 +25,13 @@ public class Trainer {
 		
 		return null;
 	}
+	public Pokemon getBenchedPokemon(){ 
+		for(int i=0;i<team.size();i++)
+			if(!team.get(i).getStat())
+				return team.get(i);
+		
+		return null;
+	}
 	public String getName(){
 		return Name;
 	}

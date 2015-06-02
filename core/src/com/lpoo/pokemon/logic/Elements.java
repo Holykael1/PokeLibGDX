@@ -2,6 +2,7 @@ package com.lpoo.pokemon.logic;
 
 import java.util.Vector;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.lpoo.pokemon.TextureManager;
 import com.lpoo.pokemon.logic.Move.ELEMENTS;
 
@@ -12,15 +13,18 @@ public class Elements {
 	Pokemon poke2 = new Pokemon(TextureManager.BLASTOISE,"Blastoise", ELEMENTS.WATER, 151, 110, 121,112, 127, 104); // squirtle
 	Pokemon poke3 = new Pokemon(TextureManager.PIKACHU,"Pikachu", ELEMENTS.ELECTRIC, 142, 117, 90,112, 101, 156);
 	Pokemon poke4 = new Pokemon(TextureManager.LAPRAS,"Lapras", ELEMENTS.ICE, 197, 150, 167,161, 194, 150);
-	
-	Move move1 = new Move("Ember", ELEMENTS.FIRE, 40, 25, 1);
-	Move move2 = new Move("FlameThrower", ELEMENTS.FIRE, 90, 15, 1);
-	Move move3 = new Move("Water Gun", ELEMENTS.WATER, 40, 25, 1);
-	Move move4 = new Move("Water Pulse", ELEMENTS.WATER, 60, 20, 1);
-	Move move5 = new Move("Thunder Shock", ELEMENTS.ELECTRIC, 40, 30, 1);
-	Move move6 = new Move("Spark", ELEMENTS.ELECTRIC, 65, 20, 1);
-	Move move7 = new Move("Ice Beam", ELEMENTS.ICE, 90, 10, 1);
-	Move move8 = new Move("Blizzard", ELEMENTS.ICE, 90, 10, 1);
+	public Sprite pok1 = new Sprite(poke1.getTexture());
+	public Sprite pok2 = new Sprite(poke2.getTexture());
+	public Sprite pok3 = new Sprite(poke3.getTexture());
+	public Sprite pok4 = new Sprite(poke4.getTexture());
+	Move move1 = new Move("Ember", ELEMENTS.FIRE, 40, 25, 90);
+	Move move2 = new Move("FlameThrower", ELEMENTS.FIRE, 90, 15, 90);
+	Move move3 = new Move("Water Gun", ELEMENTS.WATER, 40, 25, 90);
+	Move move4 = new Move("Water Pulse", ELEMENTS.WATER, 60, 20, 90);
+	Move move5 = new Move("Thunder Shock", ELEMENTS.ELECTRIC, 40, 30, 90);
+	Move move6 = new Move("Spark", ELEMENTS.ELECTRIC, 65, 20, 90);
+	Move move7 = new Move("Ice Beam", ELEMENTS.ICE, 90, 10, 90);
+	Move move8 = new Move("Blizzard", ELEMENTS.ICE, 90, 10, 90);
 
 	public Elements() {
 		poke1.addAttack(move1);

@@ -6,7 +6,7 @@ public class Move {
 		ATTACK, DEFENSE, SPECIALATTACK, SPECIALDEFENSE, SPEED, NULL
 	}
 
-	enum ELEMENTS {
+	public enum ELEMENTS {
 		FIRE, WATER, ELECTRIC, ROCK, PHYSICAL, ICE, HEAL, FLYING
 	}
 
@@ -80,7 +80,10 @@ public class Move {
 	}
 	public Move(){};
 	//Getters
-	String getName() {
+	public String getName() {
 		return Name;
+	}
+	public ELEMENTS getElement(){
+		return ElementType;
 	}
 }
