@@ -1,6 +1,6 @@
 package com.lpoo.pokemon.screen;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Gdx; 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.graphics.Color;
@@ -31,6 +31,8 @@ import com.lpoo.pokemon.TextureManager;
 import com.lpoo.pokemon.camera.OrthoCamera;
 import com.lpoo.pokemon.logic.Elements;
 import com.lpoo.pokemon.logic.Move;
+import com.lpoo.pokemon.logic.Move.ELEMENTS;
+import com.lpoo.pokemon.logic.Move.STATS;
 import com.lpoo.pokemon.logic.Pokemon;
 import com.lpoo.pokemon.logic.Trainer;
 import com.lpoo.pokemon.utilities.ProgressBar;
@@ -151,6 +153,7 @@ public class MainGameScreen extends Screen {
 			public void clicked(InputEvent event, float x, float y) {
 				tableUI.setVisible(false);
 				trainer1.changePokemon();
+				updateHP();
 				updateSpritesTrainer1();
 				p1 = "change";
 				gamestate = GameState.PLAYER2T;
@@ -161,6 +164,7 @@ public class MainGameScreen extends Screen {
 			public void clicked(InputEvent event, float x, float y) {
 				tableUI2.setVisible(false);
 				trainer2.changePokemon();
+				updateHP();
 				updateSpritesTrainer2();
 				p2 = "change";
 				gamestate = GameState.AFTERTURNS;

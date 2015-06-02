@@ -2,7 +2,7 @@ package com.lpoo.pokemon.logic;
 
 public class Move {
 	// ENUMS
-	enum STATS {
+	public enum STATS {
 		ATTACK, DEFENSE, SPECIALATTACK, SPECIALDEFENSE, SPEED, NULL
 	}
 
@@ -10,9 +10,13 @@ public class Move {
 		FIRE, WATER, ELECTRIC, ROCK, PHYSICAL, ICE, HEAL, FLYING
 	}
 
-	enum AILMENTS {
+	public enum AILMENTS {
 		NEUTRAL, CONFUSION, PARALYZE, SLEEP, POISON, BURN, FREEZE
 	}
+
+	
+
+	
 
 	// NESTED CLASSES
 	class StatusEffect {
@@ -60,15 +64,15 @@ public class Move {
 	
 	//Constructors
 	public Move(String nome, ELEMENTS element, int damage, int pp, int acc,
-			boolean hitfly, StatusEffect s, StatChanging ch, DotComponent dot) {
+			boolean hitfly, AILMENTS ailment,int inflictchance, STATS stat,int dur, int quantity, int dmgperturn, int dotdur) {
 		Name = nome;
 		ElementType = element;
 		BaseDamage = damage;
 		PP = pp;
 		Accuracy = acc;
-		statusInflicted = s;
-		dotComponent = dot;
-		statchanged = ch;
+		statusInflicted = new StatusEffect(ailment,inflictchance);
+		dotComponent = new DotComponent(dmgperturn,dotdur);
+		statchanged = new StatChanging(stat,dur,quantity);
 		hitflyingenemy = hitfly;
 	}
 	public Move(String nome,ELEMENTS element,int damage, int pp, int acc) {
@@ -77,8 +81,7 @@ public class Move {
 		BaseDamage=damage;
 		PP=pp;
 		Accuracy=acc;
-	}
-	public Move(){};
+	}public Move(){};
 	//Getters
 	public String getName() {
 		return Name;
