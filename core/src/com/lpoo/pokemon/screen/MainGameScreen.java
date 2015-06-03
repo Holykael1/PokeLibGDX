@@ -73,7 +73,7 @@ public class MainGameScreen extends Screen {
 	Table tableUI, tableUI2;
 
 	@Override
-	public void create() {
+	public void create() { 
 		cam = new OrthoCamera();
 		cam.resize();
 
@@ -241,7 +241,7 @@ public class MainGameScreen extends Screen {
 		stage.addActor(tableUI2);
 	}
 
-	public void updateSpritesTrainer1() {
+	public void updateSpritesTrainer1() { 
 		
 		if (trainer1.getActivePokemon().getName() == "Flareon") {
 			pok1 = test.pok1;
@@ -262,12 +262,12 @@ public class MainGameScreen extends Screen {
 		}
 		m1.setText(trainer1.getActivePokemon().getMoves().get(0).getName());
 		m2.setText(trainer1.getActivePokemon().getMoves().get(1).getName());
-		m1.setColor(colorButtons(trainer1.getActivePokemon().getMoves().get(0)));
-		m2.setColor(colorButtons(trainer1.getActivePokemon().getMoves().get(1)));
+//		m1.setColor(colorButtons(trainer1.getActivePokemon().getMoves().get(0)));
+//		m2.setColor(colorButtons(trainer1.getActivePokemon().getMoves().get(1)));
 
 	}
 
-	void updateSpritesTrainer2() {
+	void updateSpritesTrainer2() { 
 		if (trainer2.getActivePokemon().getName() == "Flareon") {
 			pok2 = flareon;
 			pok2.setPosition(MainGame.WIDTH - pok2.getWidth(), MainGame.HEIGHT
@@ -290,8 +290,8 @@ public class MainGameScreen extends Screen {
 		}
 		m3.setText(trainer2.getActivePokemon().getMoves().get(0).getName());
 		m4.setText(trainer2.getActivePokemon().getMoves().get(1).getName());
-		m3.setColor(colorButtons(trainer2.getActivePokemon().getMoves().get(0)));
-		m4.setColor(colorButtons(trainer2.getActivePokemon().getMoves().get(1)));
+//		m3.setColor(colorButtons(trainer2.getActivePokemon().getMoves().get(0)));
+//		m4.setColor(colorButtons(trainer2.getActivePokemon().getMoves().get(1)));
 	}
 
 	Color colorButtons(Move m) {
@@ -439,7 +439,7 @@ public class MainGameScreen extends Screen {
 	}
 
 	@Override
-	public void pause() {	
+	public void pause() {
 		// TODO Auto-generated method stub
 
 	}
