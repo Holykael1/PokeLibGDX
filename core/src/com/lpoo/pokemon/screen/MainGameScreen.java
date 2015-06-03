@@ -320,7 +320,7 @@ public class MainGameScreen extends Screen {
 	}
 
 	@Override
-	public void update() {
+	public void update() {  
 		cam.update();
 
 		switch (gamestate) {
@@ -334,20 +334,23 @@ public class MainGameScreen extends Screen {
 					trainer1.getActivePokemon().Attack(
 							trainer2.getActivePokemon(),
 							trainer1.getActivePokemon().findMove(p1));
+					//play this move animation
 					updateHP();
 					trainer2.getActivePokemon().Attack(
 							trainer1.getActivePokemon(),
 							trainer2.getActivePokemon().findMove(p2));
+					//play this move animation
+					updateHP();
 				} else {
-					System.out.println(p2);
 					trainer2.getActivePokemon().Attack(
 							trainer1.getActivePokemon(),
 							trainer2.getActivePokemon().findMove(p2));
-				
+					//play this move animation
 					updateHP();
 					trainer1.getActivePokemon().Attack(
 							trainer2.getActivePokemon(),
 							trainer1.getActivePokemon().findMove(p1));
+					//play this move animation
 					updateHP();
 				}
 			}
@@ -355,12 +358,14 @@ public class MainGameScreen extends Screen {
 				trainer2.getActivePokemon().Attack(
 						trainer1.getActivePokemon(),
 						trainer2.getActivePokemon().findMove(p2));
+				//play this move animation
 				updateHP();
 			}
 			if(p2=="change" && p1!="change"){
 				trainer1.getActivePokemon().Attack(
 						trainer2.getActivePokemon(),
 						trainer1.getActivePokemon().findMove(p1));
+				//play this move animation
 				updateHP();
 				
 			}
@@ -381,12 +386,12 @@ public class MainGameScreen extends Screen {
 		}
 
 	}
-	void updatePostTurn(){
+	void updatePostTurn(){ 
 		trainer1.getActivePokemon().updatePokemonAfterTurn();
 		trainer2.getActivePokemon().updatePokemonAfterTurn();
 		updateHP();
 	}
-	void updateHP(){
+	void updateHP() {
 		bar2.setValue((float) trainer2.getActivePokemon()
 				.getHPLeft());
 		bar.setValue((float) trainer1.getActivePokemon()
@@ -434,7 +439,7 @@ public class MainGameScreen extends Screen {
 	}
 
 	@Override
-	public void pause() {
+	public void pause() {	
 		// TODO Auto-generated method stub
 
 	}
