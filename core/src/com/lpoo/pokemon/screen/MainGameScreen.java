@@ -1,6 +1,6 @@
 package com.lpoo.pokemon.screen;
 
-import com.badlogic.gdx.Gdx; 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.graphics.Color;
@@ -41,18 +41,19 @@ import com.lpoo.pokemon.utilities.ProgressBar.ProgressBarStyle;
 public class MainGameScreen extends Screen {
 	enum GameState {
 		PLAYER1T, PLAYER2T, AFTERTURNS;
-		 @Override
-		  public String toString() {
-		    switch(this) {
-		    case PLAYER1T:
-		    	return "player 1 turn";
-		    case PLAYER2T:
-		    	return "player 2 turn";
-		    case AFTERTURNS:
-		    	return "after turns";
-		      default: throw new IllegalArgumentException();
-		    }
-	}
+		@Override
+		public String toString() {
+			switch (this) {
+			case PLAYER1T:
+				return "player 1 turn";
+			case PLAYER2T:
+				return "player 2 turn";
+			case AFTERTURNS:
+				return "after turns";
+			default:
+				throw new IllegalArgumentException();
+			}
+		}
 	}
 
 	BitmapFont tittleFont;
@@ -73,7 +74,7 @@ public class MainGameScreen extends Screen {
 	Table tableUI, tableUI2;
 
 	@Override
-	public void create() { 
+	public void create() {
 		cam = new OrthoCamera();
 		cam.resize();
 
@@ -241,8 +242,8 @@ public class MainGameScreen extends Screen {
 		stage.addActor(tableUI2);
 	}
 
-	public void updateSpritesTrainer1() { 
-		
+	public void updateSpritesTrainer1() {
+
 		if (trainer1.getActivePokemon().getName() == "Flareon") {
 			pok1 = test.pok1;
 			pok1.setPosition(50, 50);
@@ -262,12 +263,12 @@ public class MainGameScreen extends Screen {
 		}
 		m1.setText(trainer1.getActivePokemon().getMoves().get(0).getName());
 		m2.setText(trainer1.getActivePokemon().getMoves().get(1).getName());
-//		m1.setColor(colorButtons(trainer1.getActivePokemon().getMoves().get(0)));
-//		m2.setColor(colorButtons(trainer1.getActivePokemon().getMoves().get(1)));
+		// m1.setColor(colorButtons(trainer1.getActivePokemon().getMoves().get(0)));
+		// m2.setColor(colorButtons(trainer1.getActivePokemon().getMoves().get(1)));
 
 	}
 
-	void updateSpritesTrainer2() { 
+	void updateSpritesTrainer2() {
 		if (trainer2.getActivePokemon().getName() == "Flareon") {
 			pok2 = flareon;
 			pok2.setPosition(MainGame.WIDTH - pok2.getWidth(), MainGame.HEIGHT
@@ -290,8 +291,8 @@ public class MainGameScreen extends Screen {
 		}
 		m3.setText(trainer2.getActivePokemon().getMoves().get(0).getName());
 		m4.setText(trainer2.getActivePokemon().getMoves().get(1).getName());
-//		m3.setColor(colorButtons(trainer2.getActivePokemon().getMoves().get(0)));
-//		m4.setColor(colorButtons(trainer2.getActivePokemon().getMoves().get(1)));
+		// m3.setColor(colorButtons(trainer2.getActivePokemon().getMoves().get(0)));
+		// m4.setColor(colorButtons(trainer2.getActivePokemon().getMoves().get(1)));
 	}
 
 	Color colorButtons(Move m) {
@@ -320,7 +321,7 @@ public class MainGameScreen extends Screen {
 	}
 
 	@Override
-	public void update() {  
+	public void update() {
 		cam.update();
 
 		switch (gamestate) {
@@ -334,43 +335,49 @@ public class MainGameScreen extends Screen {
 					trainer1.getActivePokemon().Attack(
 							trainer2.getActivePokemon(),
 							trainer1.getActivePokemon().findMove(p1));
-					//play this move animation
+					// play this move animation
 					updateHP();
-					trainer2.getActivePokemon().Attack(
-							trainer1.getActivePokemon(),
-							trainer2.getActivePokemon().findMove(p2));
-					//play this move animation
-					updateHP();
+					if (!updateDeath2()) {
+
+						trainer2.getActivePokemon().Attack(
+								trainer1.getActivePokemon(),
+								trainer2.getActivePokemon().findMove(p2));
+						// play this move animation
+						updateHP();
+						updateDeath1();
+					}
 				} else {
 					trainer2.getActivePokemon().Attack(
 							trainer1.getActivePokemon(),
 							trainer2.getActivePokemon().findMove(p2));
-					//play this move animation
+					// play this move animation
 					updateHP();
-					trainer1.getActivePokemon().Attack(
-							trainer2.getActivePokemon(),
-							trainer1.getActivePokemon().findMove(p1));
-					//play this move animation
-					updateHP();
+					if (!updateDeath1()) {
+						trainer1.getActivePokemon().Attack(
+								trainer2.getActivePokemon(),
+								trainer1.getActivePokemon().findMove(p1));
+						// play this move animation
+						updateHP();
+						updateDeath2();
+					}
 				}
 			}
-			if(p1=="change" && p2!="change"){
-				trainer2.getActivePokemon().Attack(
-						trainer1.getActivePokemon(),
+			if (p1 == "change" && p2 != "change") {
+				trainer2.getActivePokemon().Attack(trainer1.getActivePokemon(),
 						trainer2.getActivePokemon().findMove(p2));
-				//play this move animation
+				// play this move animation
 				updateHP();
+				updateDeath1();
 			}
-			if(p2=="change" && p1!="change"){
-				trainer1.getActivePokemon().Attack(
-						trainer2.getActivePokemon(),
+			if (p2 == "change" && p1 != "change") {
+				trainer1.getActivePokemon().Attack(trainer2.getActivePokemon(),
 						trainer1.getActivePokemon().findMove(p1));
-				//play this move animation
+				// play this move animation
 				updateHP();
-				
+				updateDeath2();
 			}
 			updatePostTurn();
-			gamestate=GameState.PLAYER1T;
+			gamestate = GameState.PLAYER1T;
 			break;
 		case PLAYER1T:
 			tableUI.setVisible(true);
@@ -386,17 +393,50 @@ public class MainGameScreen extends Screen {
 		}
 
 	}
-	void updatePostTurn(){ 
+
+	void updatePostTurn() {
 		trainer1.getActivePokemon().updatePokemonAfterTurn();
 		trainer2.getActivePokemon().updatePokemonAfterTurn();
 		updateHP();
 	}
+
 	void updateHP() {
-		bar2.setValue((float) trainer2.getActivePokemon()
-				.getHPLeft());
-		bar.setValue((float) trainer1.getActivePokemon()
-				.getHPLeft());		
+		bar2.setValue((float) trainer2.getActivePokemon().getHPLeft());
+		bar.setValue((float) trainer1.getActivePokemon().getHPLeft());
 	}
+
+	boolean updateDeath2() {
+		if (trainer2.getActivePokemon().isDead()) {
+			if (trainer2.TrainerLost()) {
+				ScreenManager.setScreen(new GameOverScreen(true));
+			} else {
+				buttonChange2.setVisible(false);
+				trainer2.changePokemon();
+				updateSpritesTrainer2();
+				return true;
+			}
+
+		}
+		return false;
+
+	}
+
+	boolean updateDeath1() {
+		if (trainer1.getActivePokemon().isDead()) {
+			if (trainer1.TrainerLost()) {
+				ScreenManager.setScreen(new GameOverScreen(true));
+
+			} else {
+				buttonChange.setVisible(false);
+				trainer1.changePokemon();
+				updateSpritesTrainer1();
+				return true;
+			}
+
+		}
+		return false;
+	}
+
 	float time, duration = 1;
 
 	@Override

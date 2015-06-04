@@ -102,7 +102,7 @@ public class Pokemon extends PokemonBase {
 	}
 
 	// Attack/Damage functions
-	public double Attack(Pokemon target, Move attack) { 
+	public double Attack(Pokemon target, Move attack) {  
 		if (this.STATUS_EFFECT == AILMENTS.SLEEP) {
 			System.out.println(this.Name + " is asleep");
 			return -2; // it's asleep
