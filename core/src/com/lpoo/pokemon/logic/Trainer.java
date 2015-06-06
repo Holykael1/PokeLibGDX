@@ -60,7 +60,9 @@ public class Trainer {
 			team.get(1).changeStat(false);
 		}
 	}
-	
+	public Vector<Pokemon> getTeam(){
+		return team;
+	}
 	//Checks
 	public boolean TrainerLost(){ 
 		if(team.get(0).isDead()&&team.get(1).isDead()){

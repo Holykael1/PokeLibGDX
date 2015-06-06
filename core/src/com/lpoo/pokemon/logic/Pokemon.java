@@ -18,7 +18,7 @@ public class Pokemon extends PokemonBase {
 	Vector<Move> moves;
 	Vector<Move.DotComponent> DOT_EFFECTS;
 	Vector<Move.StatChanging> STAT_CH_EFFECTS;
-	AILMENTS STATUS_EFFECT;
+	public AILMENTS STATUS_EFFECT;
 	boolean dead;
 	boolean active;
 	int sleepcounter;
@@ -204,7 +204,7 @@ public class Pokemon extends PokemonBase {
 					}
 
 				// check for dot effects
-				DOT_EFFECTS.add(attack.dotComponent);
+				target.DOT_EFFECTS.add(attack.dotComponent);
 
 				// check for stat changing effects
 				if (attack.statchanged.changedstat != STATS.NULL) {

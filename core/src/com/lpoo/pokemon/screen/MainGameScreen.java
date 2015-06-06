@@ -62,14 +62,14 @@ public class MainGameScreen extends Screen {
 	Pokemon poke1, poke2, poke3, poke4;
 	Move move1, move2, move3, move4, move5, move6, move7, move8;
 	Elements test;
-	ProgressBar bar, bar2;
-	Sprite flareon, blastoise, pikachu, lapras, pok1, pok2, ff, bf, pf, lf;
+	ProgressBar bar, bar2, bar12, bar22;
+	Sprite flareon, blastoise, pikachu, lapras, pok1, pok2,par,psn,frz,slp,brn;
 	Stage stage;
 	GameState gamestate;
 	String p1, p2;
 	TextButton buttonChange2;
 	TextButton buttonChange;
-
+	Boolean blinking, blinking2, change, change2;
 	TextButton m1, m2, m3, m4, a1, a2, a3, a4;
 	Table tableUI, tableUI2;
 
@@ -77,11 +77,19 @@ public class MainGameScreen extends Screen {
 	public void create() {
 		cam = new OrthoCamera();
 		cam.resize();
-
+		blinking = false;
+		blinking2 = false;
 		test = new Elements();
 		gamestate = GameState.PLAYER1T;
+		frz = new Sprite(TextureManager.FREEZE);
+		brn = new Sprite(TextureManager.BURN);
+		psn = new Sprite(TextureManager.POISON);
+		slp = new Sprite(TextureManager.SLEEP);
+		par = new Sprite(TextureManager.PARALYZED);
+		
 		// test.printPoke();
-
+		change = false;
+		change2 = false;
 		poke1 = test.findPokemon("Flareon");
 		poke2 = test.findPokemon("Blastoise");
 		poke3 = test.findPokemon("Pikachu");
@@ -152,8 +160,19 @@ public class MainGameScreen extends Screen {
 		buttonChange.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+
 				tableUI.setVisible(false);
 				trainer1.changePokemon();
+				if (!change) {
+					bar.setVisible(false);
+					bar12.setVisible(true);
+					change = true;
+				} else {
+					bar.setVisible(true);
+					bar12.setVisible(false);
+					change = false;
+
+				}
 				updateHP();
 				updateSpritesTrainer1();
 				p1 = "change";
@@ -163,8 +182,19 @@ public class MainGameScreen extends Screen {
 		buttonChange2.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+
 				tableUI2.setVisible(false);
 				trainer2.changePokemon();
+				if (!change2) {
+					bar2.setVisible(false);
+					bar22.setVisible(true);
+					change = true;
+				} else {
+					bar2.setVisible(true);
+					bar22.setVisible(false);
+					change = false;
+
+				}
 				updateHP();
 				updateSpritesTrainer2();
 				p2 = "change";
@@ -213,19 +243,29 @@ public class MainGameScreen extends Screen {
 		// Progress Bars
 
 		// bar
-		bar = new ProgressBar(0,
-				(float) trainer1.getActivePokemon().getMaxHp(), 1, false,
-				barStyle);
+		bar = new ProgressBar(0, (float) trainer1.getTeam().get(0).getMaxHp(),
+				1, false, barStyle);
 		bar.setValue(bar.getMaxValue());
 		bar.setSize(250, 25);
 		bar.setAnimateInterpolation(Interpolation.linear);
 		bar.setAnimateDuration(0.75f);
 		bar.setPosition((float) (pok1.getX() + pok1.getWidth() * 1.5),
 				pok1.getY() + pok1.getHeight() / 2);
+		// bar
+		bar12 = new ProgressBar(0,
+				(float) trainer1.getTeam().get(1).getMaxHp(), 1, false,
+				barStyle);
+		bar12.setValue(bar12.getMaxValue());
+		bar12.setSize(250, 25);
+		bar12.setAnimateInterpolation(Interpolation.linear);
+		bar12.setAnimateDuration(0.75f);
+		bar12.setPosition((float) (pok1.getX() + pok1.getWidth() * 1.5),
+				pok1.getY() + pok1.getHeight() / 2);
 
+		bar12.setVisible(false);
 		// bar2
-		bar2 = new ProgressBar(0, (float) trainer2.getActivePokemon()
-				.getMaxHp(), 1, false, barStyle);
+		bar2 = new ProgressBar(0, (float) trainer2.getTeam().get(0).getMaxHp(),
+				1, false, barStyle);
 
 		bar2.setValue(bar2.getMaxValue());
 		bar2.setAnimateInterpolation(Interpolation.linear);
@@ -233,13 +273,31 @@ public class MainGameScreen extends Screen {
 		bar2.setSize(250, 25);
 		bar2.setPosition((float) (pok2.getX() - pok2.getWidth() * 1.5),
 				pok2.getY() + pok2.getHeight() / 2);
+		bar22 = new ProgressBar(0,
+				(float) trainer2.getTeam().get(1).getMaxHp(), 1, false,
+				barStyle);
 
+		bar22.setValue(bar22.getMaxValue());
+		bar22.setAnimateInterpolation(Interpolation.linear);
+		bar22.setAnimateDuration(0.75f);
+		bar22.setSize(250, 25);
+		bar22.setPosition((float) (pok2.getX() - pok2.getWidth() * 1.5),
+				pok2.getY() + pok2.getHeight() / 2);
+		bar22.setVisible(false);
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
 		stage.addActor(bar);
 		stage.addActor(bar2);
+		stage.addActor(bar22);
+		stage.addActor(bar12);
 		stage.addActor(tableUI);
 		stage.addActor(tableUI2);
+		
+//		frz.setPosition(bar.getWidth()+20, bar.getHeight()+20);
+//		slp.setPosition(bar.getWidth()+20, bar.getHeight()+20);
+//		psn.setPosition(bar.getWidth()+20, bar.getHeight()+20);
+//		brn.setPosition(bar.getWidth()+20, bar.getHeight()+20);
+//		par.setPosition(bar.getWidth()+20, bar.getHeight()+20);
 	}
 
 	public void updateSpritesTrainer1() {
@@ -335,6 +393,8 @@ public class MainGameScreen extends Screen {
 					trainer1.getActivePokemon().Attack(
 							trainer2.getActivePokemon(),
 							trainer1.getActivePokemon().findMove(p1));
+					blinking2 = true;
+					blinkingcounter2 = 50;
 					// play this move animation
 					updateHP();
 					if (!updateDeath2()) {
@@ -343,6 +403,8 @@ public class MainGameScreen extends Screen {
 								trainer1.getActivePokemon(),
 								trainer2.getActivePokemon().findMove(p2));
 						// play this move animation
+						blinking = true;
+						blinkingcounter1 = 50;
 						updateHP();
 						updateDeath1();
 					}
@@ -351,12 +413,16 @@ public class MainGameScreen extends Screen {
 							trainer1.getActivePokemon(),
 							trainer2.getActivePokemon().findMove(p2));
 					// play this move animation
+					blinking = true;
+					blinkingcounter1 = 50;
 					updateHP();
 					if (!updateDeath1()) {
 						trainer1.getActivePokemon().Attack(
 								trainer2.getActivePokemon(),
 								trainer1.getActivePokemon().findMove(p1));
 						// play this move animation
+						blinking2 = true;
+						blinkingcounter2 = 50;
 						updateHP();
 						updateDeath2();
 					}
@@ -366,6 +432,8 @@ public class MainGameScreen extends Screen {
 				trainer2.getActivePokemon().Attack(trainer1.getActivePokemon(),
 						trainer2.getActivePokemon().findMove(p2));
 				// play this move animation
+				blinking = true;
+				blinkingcounter1 = 50;
 				updateHP();
 				updateDeath1();
 			}
@@ -373,6 +441,8 @@ public class MainGameScreen extends Screen {
 				trainer1.getActivePokemon().Attack(trainer2.getActivePokemon(),
 						trainer1.getActivePokemon().findMove(p1));
 				// play this move animation
+				blinking2 = true;
+				blinkingcounter2 = 50;
 				updateHP();
 				updateDeath2();
 			}
@@ -401,8 +471,12 @@ public class MainGameScreen extends Screen {
 	}
 
 	void updateHP() {
-		bar2.setValue((float) trainer2.getActivePokemon().getHPLeft());
-		bar.setValue((float) trainer1.getActivePokemon().getHPLeft());
+
+		bar2.setValue((float) trainer2.getTeam().get(0).getHPLeft());
+		bar22.setValue((float) trainer2.getTeam().get(1).getHPLeft());
+		bar.setValue((float) trainer1.getTeam().get(0).getHPLeft());
+		bar12.setValue((float) trainer1.getTeam().get(1).getHPLeft());
+
 	}
 
 	boolean updateDeath2() {
@@ -412,6 +486,13 @@ public class MainGameScreen extends Screen {
 			} else {
 				buttonChange2.setVisible(false);
 				trainer2.changePokemon();
+				if (trainer2.getActivePokemon() == trainer2.getTeam().get(0)) {
+					bar2.setVisible(true);
+					bar22.setVisible(false);
+				} else {
+					bar22.setVisible(true);
+					bar2.setVisible(false);
+				}
 				updateSpritesTrainer2();
 				return true;
 			}
@@ -429,42 +510,129 @@ public class MainGameScreen extends Screen {
 			} else {
 				buttonChange.setVisible(false);
 				trainer1.changePokemon();
+				if (trainer1.getActivePokemon() == trainer1.getTeam().get(0)) {
+					bar.setVisible(true);
+					bar12.setVisible(false);
+				} else {
+					bar12.setVisible(true);
+					bar.setVisible(false);
+				}
 				updateSpritesTrainer1();
 				return true;
 			}
-
 		}
 		return false;
 	}
 
-	float time, duration = 1;
+	float time, timeblinking, blinkduration, duration = 1;
+	int blinkingcounter1, blinkingcounter2 = 0;
 
 	@Override
 	public void render() {
 
+		if (blinkingcounter1 == 0) {
+			blinking = false;
+		}
+		if (blinkingcounter2 == 0) {
+			blinking2 = false;
+		}
 		stage.getBatch().setProjectionMatrix(cam.combined);
 		stage.getBatch().begin();
 
-		// background and pokemons
-		stage.getBatch().draw(TextureManager.BATTLEBACK, 0, 0);
-		pok1.draw(stage.getBatch());
-		pok2.draw(stage.getBatch());
-
 		// Progress Bar RENDERING
-
+		if (blinkingcounter1 % 10 == 0)
+			if (blinking == true) {
+				pok1.setColor(0, 0, 0, 0);
+				pok1.draw(stage.getBatch());
+			}
+		if (blinkingcounter2 % 10 == 0)
+			if (blinking2 == true) {
+				pok2.setColor(0, 0, 0, 0);
+				pok2.draw(stage.getBatch());
+			}
 		float delta = Gdx.graphics.getDeltaTime();
-
 		if ((time += delta) > duration) {
-			bar.setValue(bar.getValue());
-			bar2.setValue(bar2.getValue());
+
+			if (!blinking)
+				if (trainer1.getActivePokemon() == trainer1.getTeam().get(0))
+					bar.setValue(bar.getValue());
+				else
+					bar12.setValue(bar12.getValue());
+
+			if (!blinking2)
+				if (trainer2.getActivePokemon() == trainer2.getTeam().get(0))
+					bar2.setValue(bar2.getValue());
+				else
+					bar22.setValue(bar22.getValue());
 
 			time = 0;
 		}
+		// background and pokemons
+		stage.getBatch().draw(TextureManager.BATTLEBACK, 0, 0);
 
+		pok1.draw(stage.getBatch());
+		pok2.draw(stage.getBatch());
+		pok1.setColor(1, 1, 1, 1);
+		pok2.setColor(1, 1, 1, 1);
+		switch(trainer1.getActivePokemon().STATUS_EFFECT){
+		case BURN:
+			brn.setPosition(bar.getWidth()+10,bar.getHeight()+10);
+			brn.draw(stage.getBatch());
+			break;
+		case FREEZE:
+			frz.setPosition(bar.getWidth()+10,bar.getHeight()+10);
+			frz.draw(stage.getBatch());
+			break;
+		case NEUTRAL:
+			break;
+		case PARALYZE:
+			par.setPosition(bar.getWidth()+10,bar.getHeight()+10);
+			par.draw(stage.getBatch());
+			break;
+		case POISON:
+			psn.setPosition(bar.getWidth()+10,bar.getHeight()+10);
+			psn.draw(stage.getBatch());
+			break;
+		case SLEEP:
+			slp.setPosition(bar.getWidth()+10,bar.getHeight()+10);
+			slp.draw(stage.getBatch());
+			break;
+		default:
+			break;
+		
+		}
+		switch(trainer2.getActivePokemon().STATUS_EFFECT){
+		case BURN:
+			brn.setPosition(bar2.getWidth()+10,bar2.getHeight()+10);
+			brn.draw(stage.getBatch());
+			break;
+		case FREEZE:
+			frz.setPosition(bar2.getWidth()+10,bar2.getHeight()+10);
+			frz.draw(stage.getBatch());
+			break;
+		case NEUTRAL:
+			break;
+		case PARALYZE:
+			par.setPosition(bar2.getWidth()+10,bar2.getHeight()+10);
+			par.draw(stage.getBatch());
+			break;
+		case POISON:
+			psn.setPosition(bar2.getWidth()+10,bar2.getHeight()+10);
+			psn.draw(stage.getBatch());
+			break;
+		case SLEEP:
+			slp.setPosition(bar2.getWidth()+10,bar2.getHeight()+10);
+			slp.draw(stage.getBatch());
+			break;
+		default:
+			break;
+		
+		}
 		stage.act(delta);
 		stage.getBatch().end();
 		stage.draw();
-
+		blinkingcounter1--;
+		blinkingcounter2--;
 	}
 
 	@Override
