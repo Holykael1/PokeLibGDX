@@ -2,7 +2,9 @@ package com.lpoo.pokemon.logic;
 
 import java.util.Vector; 
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.lpoo.pokemon.TextureManager;
 import com.lpoo.pokemon.logic.Move.ELEMENTS;
 import com.lpoo.pokemon.logic.Move.AILMENTS;
@@ -27,6 +29,7 @@ public class Elements {
 	Move move7 = new Move("Ice Beam", ELEMENTS.ICE, 90, 10, 100,true,AILMENTS.FREEZE,10,STATS.NULL,0,0,0,0);
 	Move move8 = new Move("Blizzard", ELEMENTS.ICE, 110, 10, 70,true,AILMENTS.FREEZE,10,STATS.NULL,0,0,0,0);
 
+	
 	public Elements() {
 		poke1.addAttack(move1);
 		poke1.addAttack(move2);

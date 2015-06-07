@@ -1,0 +1,40 @@
+
+electric.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+0002
+  rotate: false
+  xy: 1, 135
+  size: 71, 65
+  orig: 71, 65
+  offset: 0, 0
+  index: 2
+0003
+  rotate: false
+  xy: 1, 68
+  size: 70, 65
+  orig: 70, 65
+  offset: 0, 0
+  index: 3
+0005
+  rotate: false
+  xy: 1, 1
+  size: 63, 65
+  orig: 63, 65
+  offset: 0, 0
+  index: 5
+0001
+  rotate: false
+  xy: 74, 135
+  size: 40, 65
+  orig: 40, 65
+  offset: 0, 0
+  index: 1
+0004
+  rotate: false
+  xy: 66, 1
+  size: 60, 65
+  orig: 60, 65
+  offset: 0, 0
+  index: 4

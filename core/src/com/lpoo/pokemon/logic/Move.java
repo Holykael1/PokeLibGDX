@@ -1,5 +1,7 @@
 package com.lpoo.pokemon.logic;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+
 public class Move {
 	// ENUMS
 	public enum STATS {
@@ -61,7 +63,7 @@ public class Move {
 	StatusEffect statusInflicted;
 	DotComponent dotComponent;
 	StatChanging statchanged;
-	
+
 	//Constructors
 	public Move(String nome, ELEMENTS element, int damage, int pp, int acc,
 			boolean hitfly, AILMENTS ailment,int inflictchance, STATS stat,int dur, int quantity, int dmgperturn, int dotdur) {
@@ -74,6 +76,7 @@ public class Move {
 		dotComponent = new DotComponent(dmgperturn,dotdur);
 		statchanged = new StatChanging(stat,dur,quantity);
 		hitflyingenemy = hitfly;
+
 	}
 	public Move(String nome,ELEMENTS element,int damage, int pp, int acc) {
 		Name=nome;
@@ -81,7 +84,7 @@ public class Move {
 		BaseDamage=damage;
 		PP=pp;
 		Accuracy=acc;
-	}public Move(){};
+	}public Move(){	};
 	//Getters
 	public String getName() {
 		return Name;
