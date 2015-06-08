@@ -111,7 +111,7 @@ public class Pokemon extends PokemonBase {
 		moves.add(move);
 	}
 
-	void die() { 
+	public void die() { 
 		dead = true;
 	}
 

@@ -11,7 +11,6 @@ import com.lpoo.pokemon.logic.Move;
 import com.lpoo.pokemon.logic.Pokemon;
 import com.lpoo.pokemon.logic.Move.AILMENTS;
 import com.lpoo.pokemon.logic.Move.ELEMENTS;
-import com.lpoo.pokemon.logic.Move.STATS;
 import com.lpoo.pokemon.logic.Trainer;
 import com.sun.xml.internal.ws.message.FaultMessage;
 
@@ -103,10 +102,10 @@ public class tests {
 		Trainer t3 = new Trainer("Miguel", pokes);
 		t3.addPokemon(poke5);
 		Vector<Pokemon> team3 = t3.getTeam();
-		assertEquals(false, t3.trainerLost());
+		assertEquals(false, t3.TrainerLost());
 		team3.get(0).die();
 		team3.get(1).die();
-		assertEquals(true, t3.trainerLost());
+		assertEquals(true, t3.TrainerLost());
 
 		// change pokemon test
 		boolean diffName = false;
@@ -156,19 +155,19 @@ public class tests {
 				161, 194, 150);
 
 		Move mfire = new Move("Fire", ELEMENTS.FIRE, 40, 25, 100, true,
-				AILMENTS.BURN, 100, STATS.NULL, 0, 0, 0, 0);
+				AILMENTS.BURN, 100, 0, 0, 0);
 		Move mwater = new Move("Water", ELEMENTS.WATER, 40, 25, 100, true,
-				AILMENTS.NEUTRAL, 100, STATS.NULL, 0, 0, 0, 0);
+				AILMENTS.NEUTRAL, 100, 0, 0, 0);
 		Move melec = new Move("Electric", ELEMENTS.ELECTRIC, 40, 25, 100, true,
-				AILMENTS.PARALYZE, 100, STATS.NULL, 0, 0, 20, 2);
+				AILMENTS.PARALYZE, 100,  0, 20, 2);
 		Move mrock = new Move("Rock", ELEMENTS.ROCK, 40, 25, 100, true,
-				AILMENTS.CONFUSION, 100, STATS.NULL, 0, 0, 0, 0);
+				AILMENTS.CONFUSION, 100,  0, 0, 0);
 		Move mphysical = new Move("Physical", ELEMENTS.PHYSICAL, 40, 25, 100,
-				true, AILMENTS.POISON, 100, STATS.NULL, 0, 0, 0, 0);
+				true, AILMENTS.POISON, 100, 0, 0, 0);
 		Move mice = new Move("Ice", ELEMENTS.ICE, 40, 25, 100, true,
-				AILMENTS.FREEZE, 100, STATS.NULL, 0, 0, 0, 0);
+				AILMENTS.FREEZE, 100, 0, 0, 0);
 		Move mflying = new Move("Flying", ELEMENTS.FLYING, 40, 25, 100, true,
-				AILMENTS.SLEEP, 100, STATS.NULL, 0, 0, 0, 0);
+				AILMENTS.SLEEP, 100, 0, 0, 0);
 
 		pfire.addAttack(mfire);
 		pwater.addAttack(mwater);

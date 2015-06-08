@@ -35,7 +35,7 @@ public class Trainer {
 	public String getName(){
 		return Name;
 	}
-	void setName(String name){
+	public void setName(String name){
 		Name=name;
 	}
 	
