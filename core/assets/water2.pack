@@ -1,0 +1,40 @@
+
+water2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+0005
+  rotate: false
+  xy: 1, 78
+  size: 66, 171
+  orig: 66, 171
+  offset: 0, 0
+  index: 5
+0004
+  rotate: false
+  xy: 69, 111
+  size: 63, 138
+  orig: 63, 138
+  offset: 0, 0
+  index: 4
+0003
+  rotate: false
+  xy: 134, 129
+  size: 69, 120
+  orig: 69, 120
+  offset: 0, 0
+  index: 3
+0001
+  rotate: false
+  xy: 1, 1
+  size: 66, 75
+  orig: 66, 75
+  offset: 0, 0
+  index: 1
+0002
+  rotate: false
+  xy: 69, 19
+  size: 66, 90
+  orig: 66, 90
+  offset: 0, 0
+  index: 2

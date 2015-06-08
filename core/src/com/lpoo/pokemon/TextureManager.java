@@ -8,8 +8,8 @@ public class TextureManager {
 	public static Texture PLAYER = new Texture(Gdx.files.internal("player.png"));
 	public static Texture MISSILE = new Texture(Gdx.files.internal("missile.png"));
 	public static Texture ENEMY = new Texture(Gdx.files.internal("enemy.png"));
-	public static Texture GAME_OVER = new Texture(Gdx.files.internal("gameover.png"));
-	public static Texture GAME_WON = new Texture(Gdx.files.internal("gamewon.png"));
+	public static Texture PLAYER1WIN = new Texture(Gdx.files.internal("player1win.png"));
+	public static Texture PLAYER2WIN = new Texture(Gdx.files.internal("player2win.png"));
 	public static Texture TITTLE = new Texture(Gdx.files.internal("title.png"));
 	public static Texture BACKGROUND = new Texture(Gdx.files.internal("background.jpg"));
 	public static Texture BATTLEBACK = new Texture(Gdx.files.internal("battleback.png"));

@@ -1,6 +1,7 @@
 package com.lpoo.pokemon.screen;
 
 import com.badlogic.gdx.Gdx; 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
@@ -74,9 +75,14 @@ public class MainGameScreen extends Screen {
 	Animation ice;
 	Animation water;
 	Animation electric;
-
+	Music battle;
 	@Override
-	public void create() { 
+	public void create() {   
+		battle = Gdx.audio.newMusic(Gdx.files.internal("battle.mp3"));
+		battle.setVolume(0.3f);
+		battle.play();
+		
+		battle.setLooping(true);
 		cam = new OrthoCamera();
 		cam.resize();
 		
@@ -98,13 +104,13 @@ public class MainGameScreen extends Screen {
 		par = new Sprite(TextureManager.PARALYZED);
 		
 		//Spritesheets das animaçoes
-		f = new TextureAtlas(Gdx.files.internal("fire.pack"));
-		i = new TextureAtlas(Gdx.files.internal("ice.pack"));
-		w = new TextureAtlas(Gdx.files.internal("water.pack"));
-		e = new TextureAtlas(Gdx.files.internal("electric.pack"));
+		f = new TextureAtlas(Gdx.files.internal("fire2.pack"));
+		i = new TextureAtlas(Gdx.files.internal("ice2.pack"));
+		w = new TextureAtlas(Gdx.files.internal("water2.pack"));
+		e = new TextureAtlas(Gdx.files.internal("electric2.pack"));
 		
 		//Animações
-		ice = new Animation(1 / 16f, i.getRegions());
+		ice = new Animation(1 / 11f, i.getRegions());
 		water = new Animation(1 / 12f, w.getRegions());
 		electric = new Animation(1 / 12f, e.getRegions());
 		fire = new Animation(1 / 11f, f.getRegions());
@@ -527,12 +533,12 @@ public class MainGameScreen extends Screen {
 		bar12.setValue((float) trainer1.getTeam().get(1).getHPLeft());
 
 	}
-	void player2attacked(){
+	void player2attacked(){   
 		if (blinking2 == true) {
 			if (trainer1.getActivePokemon().getName() == "Flareon") {
 				stage.getBatch().draw(fire.getKeyFrame(elapsedTime, false),
-						pok2.getX() + pok2.getWidth() / 3,
-						pok2.getY() + pok2.getHeight() / 3);
+						pok2.getX() + pok2.getWidth() / 5,
+						pok2.getY()+pok2.getHeight()/4);
 				if (fire.isAnimationFinished(elapsedTime)) {
 					elapsedTime = 0;
 				}
@@ -540,7 +546,7 @@ public class MainGameScreen extends Screen {
 			if (trainer1.getActivePokemon().getName() == "Blastoise") {
 				stage.getBatch().draw(water.getKeyFrame(elapsedTime, true),
 						pok2.getX() + pok2.getWidth() / 3,
-						pok2.getY() + pok2.getHeight() / 3);
+						pok2.getY());
 				if (water.isAnimationFinished(elapsedTime)) {
 					elapsedTime = 0;
 				}
@@ -548,7 +554,7 @@ public class MainGameScreen extends Screen {
 			if (trainer1.getActivePokemon().getName() == "Pikachu") {
 				stage.getBatch().draw(electric.getKeyFrame(elapsedTime, false),
 						pok2.getX() + pok2.getWidth() / 3,
-						pok2.getY() + pok2.getHeight() / 3);
+						pok2.getY());
 				if (electric.isAnimationFinished(elapsedTime)) {
 					elapsedTime = 0;
 				}
@@ -556,7 +562,7 @@ public class MainGameScreen extends Screen {
 			if (trainer1.getActivePokemon().getName() == "Lapras") {
 				stage.getBatch().draw(ice.getKeyFrame(elapsedTime, false),
 						pok2.getX() + pok2.getWidth() / 3,
-						pok2.getY() + pok2.getHeight() / 3);
+						pok2.getY());
 				if (ice.isAnimationFinished(elapsedTime)) {
 					elapsedTime = 0;
 				}
@@ -564,12 +570,12 @@ public class MainGameScreen extends Screen {
 		}
 
 	}
-	void player1attacked(){ 
+	void player1attacked(){   
 		if (blinking == true) {
 			if (trainer2.getActivePokemon().getName() == "Flareon") {
 				stage.getBatch().draw(fire.getKeyFrame(elapsedTime, false),
 						pok1.getX() + pok1.getWidth() / 3,
-						pok1.getY() + pok1.getHeight() / 3);
+						pok1.getY());
 				if (fire.isAnimationFinished(elapsedTime)) {
 					elapsedTime = 0;				
 				}
@@ -577,15 +583,15 @@ public class MainGameScreen extends Screen {
 			if (trainer2.getActivePokemon().getName() == "Blastoise") {
 				stage.getBatch().draw(water.getKeyFrame(elapsedTime, false),
 						pok1.getX() + pok1.getWidth() / 3,
-						pok1.getY() + pok1.getHeight() / 3);
+						pok1.getY());
 				if (water.isAnimationFinished(elapsedTime)) {
 					elapsedTime = 0;
 				}
 			}
 			if (trainer2.getActivePokemon().getName() == "Pikachu") {
 				stage.getBatch().draw(electric.getKeyFrame(elapsedTime, false),
-						pok1.getX() + pok1.getWidth() / 3,
-						pok1.getY() + pok1.getHeight() / 3);
+						(float) (pok1.getX() + pok1.getWidth()/7),
+						pok1.getY());
 				if (electric.isAnimationFinished(elapsedTime)) {
 					elapsedTime = 0;
 				}
@@ -593,7 +599,7 @@ public class MainGameScreen extends Screen {
 			if (trainer2.getActivePokemon().getName() == "Lapras") {
 				stage.getBatch().draw(ice.getKeyFrame(elapsedTime, false),
 						pok1.getX() + pok1.getWidth() / 3,
-						pok1.getY() + pok1.getHeight() / 3);
+						pok1.getY()+pok1.getHeight()/3);
 				if (ice.isAnimationFinished(elapsedTime)) {
 					elapsedTime = 0;
 				}
@@ -603,6 +609,7 @@ public class MainGameScreen extends Screen {
 	boolean updateDeath2() {
 		if (trainer2.getActivePokemon().isDead()) {
 			if (trainer2.TrainerLost()) {
+				battle.dispose();
 				ScreenManager.setScreen(new GameOverScreen(true));
 			} else {
 				buttonChange2.setVisible(false);
@@ -623,10 +630,11 @@ public class MainGameScreen extends Screen {
 
 	}
 
-	boolean updateDeath1() {
+	boolean updateDeath1() { 
 		if (trainer1.getActivePokemon().isDead()) {
 			if (trainer1.TrainerLost()) {
-				ScreenManager.setScreen(new GameOverScreen(true));
+				battle.dispose();
+				ScreenManager.setScreen(new GameOverScreen(false));
 
 			} else {
 				buttonChange.setVisible(false);

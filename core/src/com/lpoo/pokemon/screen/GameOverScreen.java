@@ -15,9 +15,9 @@ public class GameOverScreen extends Screen {
 	
 	public GameOverScreen(boolean won) {
 		if(won)
-			texture=TextureManager.GAME_WON;
+			texture=TextureManager.PLAYER1WIN;
 		else 
-			texture=TextureManager.GAME_OVER;
+			texture=TextureManager.PLAYER2WIN;
 	}
 
 	@Override
