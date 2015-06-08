@@ -1,7 +1,5 @@
 package com.lpoo.pokemon.logic;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-
 public class Move {
 	// ENUMS
 
