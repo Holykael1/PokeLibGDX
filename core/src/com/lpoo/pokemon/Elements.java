@@ -1,11 +1,10 @@
-package com.lpoo.pokemon.logic;
+package com.lpoo.pokemon;
 
 import java.util.Vector; 
 
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.lpoo.pokemon.TextureManager;
+import com.lpoo.pokemon.logic.Move;
+import com.lpoo.pokemon.logic.Pokemon;
 import com.lpoo.pokemon.logic.Move.ELEMENTS;
 import com.lpoo.pokemon.logic.Move.AILMENTS;
 public class Elements {

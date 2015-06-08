@@ -28,13 +28,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.lpoo.pokemon.Elements;
 import com.lpoo.pokemon.MainGame;
 import com.lpoo.pokemon.TextureManager;
 import com.lpoo.pokemon.camera.OrthoCamera;
-import com.lpoo.pokemon.logic.Elements;
 import com.lpoo.pokemon.logic.Move;
 import com.lpoo.pokemon.logic.Move.ELEMENTS;
-
 import com.lpoo.pokemon.logic.Pokemon;
 import com.lpoo.pokemon.logic.Trainer;
 import com.lpoo.pokemon.utilities.ProgressBar;

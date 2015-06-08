@@ -16,7 +16,7 @@ public class MainGame implements ApplicationListener {
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
-		ScreenManager.setScreen(new MainGameScreen());
+		ScreenManager.setScreen(new MainMenuScreen());
 	}
 
 	@Override
