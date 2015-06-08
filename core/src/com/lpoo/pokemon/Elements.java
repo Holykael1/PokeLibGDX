@@ -21,8 +21,8 @@ public class Elements {
 	Move move1 = new Move("Ember", ELEMENTS.FIRE, 40, 25, 100,true,AILMENTS.BURN,10,0,0,0);
 	Move move2 = new Move("FlameThrower", ELEMENTS.FIRE, 90, 15, 100,true,AILMENTS.BURN,10,0,0,0);
 	Move move3 = new Move("Water Gun", ELEMENTS.WATER, 40, 25,100,true,AILMENTS.NEUTRAL,0,0,0,0);
-	Move move4 = new Move("Water Pulse", ELEMENTS.WATER, 60, 20, 100,true,AILMENTS.CONFUSION,20,0,0,0);
-	Move move5 = new Move("Thunder Shock", ELEMENTS.ELECTRIC, 40, 30, 100,true,AILMENTS.PARALYZE,10,0,20,2);
+	Move move4 = new Move("Water Pulse", ELEMENTS.WATER, 60, 20, 100,true,AILMENTS.NEUTRAL	,0,0,0,0);
+	Move move5 = new Move("Thunder Shock", ELEMENTS.ELECTRIC, 40, 30, 100,true,AILMENTS.PARALYZE,10,0,5,2);
 	Move move6 = new Move("Spark", ELEMENTS.ELECTRIC, 65, 20, 100,true,AILMENTS.PARALYZE,30,0,0,0);
 	Move move7 = new Move("Ice Beam", ELEMENTS.ICE, 90, 10, 100,true,AILMENTS.FREEZE,10,0,0,0);
 	Move move8 = new Move("Blizzard", ELEMENTS.ICE, 110, 10, 70,true,AILMENTS.FREEZE,10,0,0,0);

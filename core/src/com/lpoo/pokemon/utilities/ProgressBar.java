@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Pools;
-
+//Este código não é original, é uma modificação da classe ProgressBar do libgdx provida de um user de um fórum
 /** A progress bar is a horizontal indicator that allows a user to set a value. The progress bar has a range (min, max) and a stepping between
  * each value the progress bar represents.
  * <p>
