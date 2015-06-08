@@ -131,6 +131,21 @@ public class tests {
 		assertEquals(false, poke5.isDead());
 		poke5.die();
 		assertEquals(true, poke5.isDead());
+		
+		//GetPokes test
+		Trainer t4 = new Trainer("Teste4");
+		t4.addPokemon(poke1);
+		t4.addPokemon(poke2);
+		Pokemon test = t4.getActivePokemon();
+		boolean sameName=false;
+		if(test.getName()=="Moltres")
+			sameName=true;
+		assertEquals(true, sameName);
+		test= t4.getBenchedPokemon();
+		sameName=false;
+		if(test.getName()=="Squirtle")
+			sameName=true;
+		assertEquals(true, sameName);
 	}
 
 	@Test
@@ -177,17 +192,24 @@ public class tests {
 		pice.addAttack(mice);
 		pflying.addAttack(mflying);
 
-		Trainer t1 = new Trainer("Fire/Water");
-		t1.addPokemon(pfire);
-		t1.addPokemon(pwater);
-		Trainer t2 = new Trainer("Elec/Rock");
-		t2.addPokemon(pelec);
-		t2.addPokemon(prock);
-		Trainer t3 = new Trainer("Physical/Ice");
-		t3.addPokemon(pphysical);
-		t3.addPokemon(pice);
-		Trainer t4 = new Trainer("Fly");
-		t4.addPokemon(pflying);
+//		Trainer t1 = new Trainer("Fire/Water");
+//		t1.addPokemon(pfire);
+//		t1.addPokemon(pwater);
+//		Trainer t2 = new Trainer("Elec/Rock");
+//		t2.addPokemon(pelec);
+//		t2.addPokemon(prock);
+//		Trainer t3 = new Trainer("Physical/Ice");
+//		t3.addPokemon(pphysical);
+//		t3.addPokemon(pice);
+//		Trainer t4 = new Trainer("Fly");
+//		t4.addPokemon(pflying);
+		pfire.setActive(true);
+		pwater.setActive(true);
+		pelec.setActive(true);
+		prock.setActive(true);
+		pphysical.setActive(true);
+		pice.setActive(true);
+		pflying.setActive(true);
 
 		// begin attack test
 		// fire->ice
@@ -197,8 +219,12 @@ public class tests {
 		if (pice.getHPLeft() == HP - damageDone)
 			test = true;
 		assertEquals(true, test);
+		System.out.println("ACTIVE " + pice.isActive());
+		pice.setActive(true);
 		pice.updatePokemonAfterTurn();
-		pice.STATUS_EFFECT=Move.AILMENTS.NEUTRAL;
+		pice.updatePokemonAfterTurn();
+		pice.updatePokemonAfterTurn();
+		pice.STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
 
 		// fire->fire
 		test = false;
@@ -206,9 +232,11 @@ public class tests {
 		damageDone = pfire.Attack(pfire, mfire);
 		if (pfire.getHPLeft() == HP - damageDone)
 			test = true;
-		assertEquals(true, test); 
+		assertEquals(true, test);
 		pfire.updatePokemonAfterTurn();
-		pfire.STATUS_EFFECT=Move.AILMENTS.NEUTRAL;
+		pfire.updatePokemonAfterTurn();
+		pfire.updatePokemonAfterTurn();
+		pfire.STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
 
 		// fire->water
 		test = false;
@@ -217,8 +245,10 @@ public class tests {
 		if (pwater.getHPLeft() == HP - damageDone)
 			test = true;
 		assertEquals(true, test);
-		pwater.updatePokemonAfterTurn();
-		pwater.STATUS_EFFECT=Move.AILMENTS.NEUTRAL;
+		pfire.updatePokemonAfterTurn();
+		pfire.updatePokemonAfterTurn();
+		pfire.updatePokemonAfterTurn();
+		pwater.STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
 
 		// fire->rock
 		test = false;
@@ -228,8 +258,10 @@ public class tests {
 			test = true;
 		assertEquals(true, test);
 		prock.updatePokemonAfterTurn();
-		prock.STATUS_EFFECT=Move.AILMENTS.NEUTRAL;
-		
+		prock.updatePokemonAfterTurn();
+		prock.updatePokemonAfterTurn();
+		prock.STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
+
 		// water->fire
 		test = false;
 		HP = pfire.getHPLeft();
@@ -238,8 +270,10 @@ public class tests {
 			test = true;
 		assertEquals(true, test);
 		pfire.updatePokemonAfterTurn();
-		pfire.STATUS_EFFECT=Move.AILMENTS.NEUTRAL;
-		
+		pfire.updatePokemonAfterTurn();
+		pfire.updatePokemonAfterTurn();
+		pfire.STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
+
 		// water->rock
 		test = false;
 		HP = prock.getHPLeft();
@@ -247,8 +281,10 @@ public class tests {
 		if (prock.getHPLeft() == HP - damageDone)
 			test = true;
 		assertEquals(true, test);
-//		prock.updatePokemonAfterTurn();
-		prock.STATUS_EFFECT=Move.AILMENTS.NEUTRAL;
+		prock.updatePokemonAfterTurn();
+		prock.updatePokemonAfterTurn();
+		prock.updatePokemonAfterTurn();
+		prock.STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
 
 		// water->water
 		test = false;
@@ -257,8 +293,11 @@ public class tests {
 		if (pwater.getHPLeft() == HP - damageDone)
 			test = true;
 		assertEquals(true, test);
-//		pwater.updatePokemonAfterTurn();
-		pwater.STATUS_EFFECT=Move.AILMENTS.NEUTRAL;
+		pwater.setActive(true);
+		pwater.updatePokemonAfterTurn();
+		pwater.updatePokemonAfterTurn();
+		pwater.updatePokemonAfterTurn();
+		pwater.STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
 
 		// electricity->Flying
 		test = false;
@@ -267,8 +306,10 @@ public class tests {
 		if (pflying.getHPLeft() == HP - damageDone)
 			test = true;
 		assertEquals(true, test);
-//		pflying.updatePokemonAfterTurn();
-		pflying.STATUS_EFFECT=Move.AILMENTS.NEUTRAL;
+		pflying.updatePokemonAfterTurn();
+		pflying.updatePokemonAfterTurn();
+		pflying.updatePokemonAfterTurn();
+		pflying.STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
 
 		// electricity->water
 		test = false;
@@ -277,9 +318,11 @@ public class tests {
 		if (pwater.getHPLeft() == HP - damageDone)
 			test = true;
 		assertEquals(true, test);
-//		pwater.updatePokemonAfterTurn();
-		pwater.STATUS_EFFECT=Move.AILMENTS.NEUTRAL;
-		
+		pwater.updatePokemonAfterTurn();
+		pwater.updatePokemonAfterTurn();
+		pwater.updatePokemonAfterTurn();
+		pwater.STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
+
 		// electricity->electricity
 		test = false;
 		HP = pelec.getHPLeft();
@@ -287,9 +330,11 @@ public class tests {
 		if (pelec.getHPLeft() == HP - damageDone)
 			test = true;
 		assertEquals(true, test);
-//		pelec.updatePokemonAfterTurn();
-		pelec.STATUS_EFFECT=Move.AILMENTS.NEUTRAL;
-		
+		pelec.updatePokemonAfterTurn();
+		pelec.updatePokemonAfterTurn();
+		pelec.updatePokemonAfterTurn();
+		pelec.STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
+
 		// rock->flying
 		test = false;
 		HP = pflying.getHPLeft();
@@ -297,9 +342,11 @@ public class tests {
 		if (pflying.getHPLeft() == HP - damageDone)
 			test = true;
 		assertEquals(true, test);
-//		pflying.updatePokemonAfterTurn();
-		pflying.STATUS_EFFECT=Move.AILMENTS.NEUTRAL;
-		
+		pflying.updatePokemonAfterTurn();
+		pflying.updatePokemonAfterTurn();
+		pflying.updatePokemonAfterTurn();
+		pflying.STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
+
 		// rock->ice
 		test = false;
 		HP = pice.getHPLeft();
@@ -307,9 +354,11 @@ public class tests {
 		if (pice.getHPLeft() == HP - damageDone)
 			test = true;
 		assertEquals(true, test);
-//		pice.updatePokemonAfterTurn();
-		pice.STATUS_EFFECT=Move.AILMENTS.NEUTRAL;
-		
+		pice.updatePokemonAfterTurn();
+		pice.updatePokemonAfterTurn();
+		pice.updatePokemonAfterTurn();
+		pice.STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
+
 		// rock->fire
 		test = false;
 		HP = pfire.getHPLeft();
@@ -317,8 +366,10 @@ public class tests {
 		if (pfire.getHPLeft() == HP - damageDone)
 			test = true;
 		assertEquals(true, test);
-//		pfire.updatePokemonAfterTurn();
-		pfire.STATUS_EFFECT=Move.AILMENTS.NEUTRAL;
+		pfire.updatePokemonAfterTurn();
+		pfire.updatePokemonAfterTurn();
+		pfire.updatePokemonAfterTurn();
+		pfire.STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
 
 		// rock->rock
 		test = false;
@@ -327,9 +378,11 @@ public class tests {
 		if (prock.getHPLeft() == HP - damageDone)
 			test = true;
 		assertEquals(true, test);
-//		prock.updatePokemonAfterTurn();
-		prock.STATUS_EFFECT=Move.AILMENTS.NEUTRAL;
-		
+		 prock.updatePokemonAfterTurn();
+		 prock.updatePokemonAfterTurn();
+		 prock.updatePokemonAfterTurn();
+		prock.STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
+
 		// physical->rock
 		test = false;
 		HP = prock.getHPLeft();
@@ -337,19 +390,23 @@ public class tests {
 		if (prock.getHPLeft() == HP - damageDone)
 			test = true;
 		assertEquals(true, test);
-//		prock.updatePokemonAfterTurn();
-		prock.STATUS_EFFECT=Move.AILMENTS.NEUTRAL;
-		
+		 prock.updatePokemonAfterTurn();
+		 prock.updatePokemonAfterTurn();
+		 prock.updatePokemonAfterTurn();
+		prock.STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
+
 		// ice->flying
 		test = false;
 		HP = pflying.getHPLeft();
 		damageDone = pice.Attack(pflying, mice);
 		if (pflying.getHPLeft() == HP - damageDone)
 			test = true;
-//		pflying.updatePokemonAfterTurn();
 		assertEquals(true, test);
-		pflying.STATUS_EFFECT=Move.AILMENTS.NEUTRAL;
-		
+		pflying.updatePokemonAfterTurn();
+		pflying.updatePokemonAfterTurn();
+		pflying.updatePokemonAfterTurn();
+		pflying.STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
+
 		// ice->water
 		test = false;
 		HP = pwater.getHPLeft();
@@ -357,9 +414,11 @@ public class tests {
 		if (pwater.getHPLeft() == HP - damageDone)
 			test = true;
 		assertEquals(true, test);
-//		pwater.updatePokemonAfterTurn();
-		pwater.STATUS_EFFECT=Move.AILMENTS.NEUTRAL;
-		
+		pwater.updatePokemonAfterTurn();
+		pwater.updatePokemonAfterTurn();
+		pwater.updatePokemonAfterTurn();
+		pwater.STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
+
 		// ice->ice
 		test = false;
 		HP = pice.getHPLeft();
@@ -367,9 +426,11 @@ public class tests {
 		if (pice.getHPLeft() == HP - damageDone)
 			test = true;
 		assertEquals(true, test);
-//		pice.updatePokemonAfterTurn();
-		pice.STATUS_EFFECT=Move.AILMENTS.NEUTRAL;
-		
+		pice.updatePokemonAfterTurn();
+		pice.updatePokemonAfterTurn();
+		pice.updatePokemonAfterTurn();
+		pice.STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
+
 		// flying->rock
 		test = false;
 		HP = prock.getHPLeft();
@@ -377,9 +438,11 @@ public class tests {
 		if (prock.getHPLeft() == HP - damageDone)
 			test = true;
 		assertEquals(true, test);
-//		prock.updatePokemonAfterTurn();
-		prock.STATUS_EFFECT=Move.AILMENTS.NEUTRAL;
-		
+		prock.updatePokemonAfterTurn();
+		prock.updatePokemonAfterTurn();
+		prock.updatePokemonAfterTurn();
+		prock.STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
+
 		// flying->electricity
 		test = false;
 		HP = pelec.getHPLeft();
@@ -387,38 +450,37 @@ public class tests {
 		if (pelec.getHPLeft() == HP - damageDone)
 			test = true;
 		assertEquals(true, test);
-		//pelec.updatePokemonAfterTurn();
-		pelec.STATUS_EFFECT=Move.AILMENTS.NEUTRAL;
-		
-		
-		//STATUS_EFEFCT Stuff
-		//Sleep
-		test=false;
-		pfire.STATUS_EFFECT=Move.AILMENTS.SLEEP;
-		damageDone=pfire.Attack(prock, mfire);
-		if(damageDone==-2)
-			test=true;
+		pelec.updatePokemonAfterTurn();
+		pelec.updatePokemonAfterTurn();
+		pelec.updatePokemonAfterTurn();
+		pelec.STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
+
+		// STATUS_EFEFCT Stuff
+		// Sleep
+		test = false;
+		pfire.STATUS_EFFECT = Move.AILMENTS.SLEEP;
+		damageDone = pfire.Attack(prock, mfire);
+		if (damageDone == -2)
+			test = true;
 		assertEquals(true, test);
-		
-		//Freeze
-		test=false;
-		pfire.STATUS_EFFECT=Move.AILMENTS.FREEZE;
-		damageDone=pfire.Attack(prock, mfire);
-		if(damageDone==-3)
-			test=true;
+
+		// Freeze
+		test = false;
+		pfire.STATUS_EFFECT = Move.AILMENTS.FREEZE;
+		damageDone = pfire.Attack(prock, mfire);
+		if (damageDone == -3)
+			test = true;
 		assertEquals(true, test);
-		
-		//Paralyzed
-		test=false;
-		pfire.STATUS_EFFECT=Move.AILMENTS.FREEZE;
-		damageDone=pfire.Attack(prock, mfire);
-		
-		//Confused
-		test=false;
-		pfire.STATUS_EFFECT=Move.AILMENTS.CONFUSION;
-		damageDone=pfire.Attack(prock, mfire);
-		
-		
+
+		// Paralyzed
+		test = false;
+		pfire.STATUS_EFFECT = Move.AILMENTS.PARALYZE;
+		damageDone = pfire.Attack(prock, mfire);
+
+		// Confused
+		test = false;
+		pfire.STATUS_EFFECT = Move.AILMENTS.CONFUSION;
+		damageDone = pfire.Attack(prock, mfire);
 
 	}
 }

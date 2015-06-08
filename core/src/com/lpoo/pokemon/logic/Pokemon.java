@@ -18,10 +18,22 @@ public class Pokemon extends PokemonBase {
 	
 	public AILMENTS STATUS_EFFECT;
 	boolean dead;
-	boolean active;
+	private boolean active;
 	int sleepcounter;
 
 	// Constructors
+	/**
+	 * Contructor n1 with pokemons textures
+	 * @param texture Pokemon texture
+	 * @param nome Pokemon name
+	 * @param element Pokemon element
+	 * @param HP Pokemon hitpoints stat
+	 * @param att Pokemon attack stat
+	 * @param def Pokemon defense stat
+	 * @param SPA pokemon special attack stat
+	 * @param SPD pokemon special defense stat
+	 * @param ag pokemon agility stat
+	 */
 	public Pokemon(Texture texture, String nome, ELEMENTS element, double HP, 
 			double att, double def, double SPA, double SPD, double ag) {
 		this.texture = texture;
@@ -38,9 +50,20 @@ public class Pokemon extends PokemonBase {
 		DOT_EFFECTS = new Vector<Move.DotComponent>();
 	
 		STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
-		active=false;
+		setActive(false);
 	}
-	// Constructors
+	
+	/**
+	 * Constructor n2
+	 * @param nome Pokemon name
+	 * @param element Pokemon element
+	 * @param HP Pokemon hitpoints stat
+	 * @param att Pokemon attack stat
+	 * @param def Pokemon defense stat
+	 * @param SPA pokemon special attack stat
+	 * @param SPD pokemon special defense stat
+	 * @param ag pokemon agility stat
+	 */
 	public Pokemon(String nome, ELEMENTS element, double HP, 
 			double att, double def, double SPA, double SPD, double ag) {
 		Name = nome;
@@ -56,8 +79,22 @@ public class Pokemon extends PokemonBase {
 		DOT_EFFECTS = new Vector<Move.DotComponent>();
 	
 		STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
-		active=false;
+		setActive(false);
 	}
+	
+	/**
+	 * Constructor n3 with predefined moves 
+	 * @param texture
+	 * @param nome Pokemon name
+	 * @param element Pokemon element
+	 * @param HP Pokemon hitpoints stat
+	 * @param att Pokemon attack stat
+	 * @param def Pokemon defense stat
+	 * @param SPA pokemon special attack stat
+	 * @param SPD pokemon special defense stat
+	 * @param ag pokemon agility stat
+	 * @param mv vector of moves of that pokemon
+	 */
 	public Pokemon(Texture texture, String nome, ELEMENTS element, double HP, 
 			double att, double def, double SPA, double SPD, double ag,
 			Vector<Move> mv) {
@@ -74,48 +111,89 @@ public class Pokemon extends PokemonBase {
 		Speed = ag;
 		DOT_EFFECTS = new Vector<Move.DotComponent>();
 		STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
-		active=false; 
+		setActive(false); 
 	}
  
 	// Getters
+	/**
+	 * get pokemon name
+	 * @return pokemon name
+	 */ 
 	public String getName() {
 		return Name;
 	}
 
+	/**
+	 * get pokemon texture
+	 * @return pokemon texture
+	 */
 	public Texture getTexture() {
 		return texture;
 	}
 
+	/**
+	 * get active Boolean
+	 * @return active boolean
+	 */
 	public boolean getStat() {
-		return active;
+		return isActive();
 	}
 
+	/**
+	 * gets the pokemon's moves
+	 * @return pokemon's moves vector
+	 */
 	public Vector<Move> getMoves() {
 		return moves;
 	}
 
+	/**
+	 * gets the remaining HP of a pokemon
+	 * @return HP left
+	 */
 	public double getHPLeft() {
 		return HitPoints;
 	}
 
+	/**
+	 * the state of a pokemon
+	 * @return true if he's dead, false otherwise
+	 */
 	public boolean isDead() {
 		return dead;
 	}
 
 	// Modifiers
+	/**
+	 * change active state
+	 * @param stat state
+	 */
 	void changeStat(boolean stat) { 
-		active = stat;
+		setActive(stat);
 	}
 
+	/**
+	 * adds an attack to a pokemon
+	 * @param move move given to a pokemon
+	 */
 	public void addAttack(Move move) {
 		moves.add(move);
 	}
 
+	/**
+	 * kills a pokemon ( sets dead to true)
+	 */
 	public void die() { 
 		dead = true;
 	}
 
 	// Attack/Damage functions
+	/**
+	 * attack function
+	 * @param target attack target
+	 * @param attack move to use on the targer
+	 * @return damage done by the attack
+	 */
 	public double Attack(Pokemon target, Move attack) {  
 		if (this.STATUS_EFFECT == AILMENTS.SLEEP) {
 			System.out.println(this.Name + " is asleep");
@@ -234,6 +312,12 @@ public class Pokemon extends PokemonBase {
 	}
 
 	// http://bulbapedia.bulbagarden.net/wiki/Damage formulas
+	/**
+	 * calculates the effectiveness given the elemets of the pokemon and the move
+	 * @param target targeted pokemon
+	 * @param attack2 atack used on the target
+	 * @return damage done
+	 */
 	double CalculateAttackDamage(Pokemon target, Move attack2) {
 		Random randomGenerator = new Random();
 		double randomValue = randomGenerator.nextFloat() * (1 - 0.85) + 0.85;
@@ -362,6 +446,9 @@ public class Pokemon extends PokemonBase {
 	}
 
 	// Auxiliary functions
+	/**
+	 * displays the moves of a pokemon
+	 */
 	void displayMoves() {
 		int n = 1;
 		for (int i = 0; i < moves.size(); i++) {
@@ -370,8 +457,11 @@ public class Pokemon extends PokemonBase {
 		}
 	}
 
+	/**
+	 * updates the pokemon status after a turn such as DOT attacks, paralyze, sleep, confusion
+	 */
 	public void updatePokemonAfterTurn() { 
-		if (this.active) {
+		if (this.isActive()) {
 			// Handle DOTS
 			for (int i = 0; i < DOT_EFFECTS.size(); i++) {
 				if (DOT_EFFECTS.get(i).duration <= 0) {
@@ -427,10 +517,19 @@ public class Pokemon extends PokemonBase {
 		}
 	}
 
+	/**
+	 * gets the max HP of a pokemon
+	 * @return max HP
+	 */
 	public double getMaxHp() {
 		return MaxHitPoints;
 	}
 
+	/**
+	 * finds a certain move
+	 * @param command Move name
+	 * @return move if found, null otherwise
+	 */
 	public Move findMove(String command) {
 		for (int i = 0; i < this.getMoves().size(); i++) {
 			if (this.getMoves().get(i).getName().equals(command))
@@ -438,7 +537,28 @@ public class Pokemon extends PokemonBase {
 		}
 		return null;
 	}
+	
+	/**
+	 * gets the pokemon's speed
+	 * @return speed
+	 */
 	public double getSpeed(){
 		return this.Speed;
+	}
+	
+	/**
+	 * gets active status
+	 * @return active status
+	 */
+	public boolean isActive() {
+		return active;
+	}
+	
+	/**
+	 * sets active status
+	 * @param active new active status
+	 */
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 }

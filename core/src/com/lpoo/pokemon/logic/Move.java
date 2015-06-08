@@ -53,6 +53,20 @@ public class Move {
 	
 
 	//Constructors
+	/**
+	 * Move constructor 2
+	 * @param nome Move Name
+	 * @param element elemental damage
+	 * @param damage amount of damage
+	 * @param pp nr of times we can use that move
+	 * @param acc accuracy
+	 * @param hitfly can it hit flying pokemons
+	 * @param ailment post atack element
+	 * @param inflictchance chance to inflict post attack effects
+	 * @param quantity quantity
+	 * @param dmgperturn damage per trn
+	 * @param dotdur damage per turn
+	 */
 	public Move(String nome, ELEMENTS element, int damage, int pp, int acc,
 			boolean hitfly, AILMENTS ailment,int inflictchance,int quantity, int dmgperturn, int dotdur) {
 		Name = nome;
@@ -66,17 +80,41 @@ public class Move {
 		hitflyingenemy = hitfly;
 
 	}
+	
+	/**
+	 *  Move constructor 2
+	 * @param nome Move Name
+	 * @param element elemental damage
+	 * @param damage amount of damage
+	 * @param pp nr of times we can use that move
+	 * @param acc accuracy
+	 */
 	public Move(String nome,ELEMENTS element,int damage, int pp, int acc) {
 		Name=nome;
 		ElementType=element;
 		BaseDamage=damage;
 		PP=pp;
 		Accuracy=acc;
-	}public Move(){	};
+	}
+	
+	/**
+	 * Empty constructor
+	 */
+	public Move(){	};
 	//Getters
+	
+	/**
+	 * get Name of the move
+	 * @return
+	 */
 	public String getName() {
 		return Name;
 	}
+	
+	/**
+	 * get the element of the move
+	 * @return
+	 */
 	public ELEMENTS getElement(){
 		return ElementType;
 	}
