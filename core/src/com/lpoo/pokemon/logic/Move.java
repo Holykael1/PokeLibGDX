@@ -4,9 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 
 public class Move {
 	// ENUMS
-	public enum STATS {
-		ATTACK, DEFENSE, SPECIALATTACK, SPECIALDEFENSE, SPEED, NULL
-	}
+
 
 	public enum ELEMENTS {
 		FIRE, WATER, ELECTRIC, ROCK, PHYSICAL, ICE, HEAL, FLYING
@@ -31,17 +29,7 @@ public class Move {
 		}
 	}
 
-	class StatChanging {
-		STATS changedstat;
-		int duration;
-		int quantity;
 
-		StatChanging(STATS ch, int d, int q) {
-			changedstat = ch;
-			duration = d;
-			quantity = q;
-		}
-	}
 
 	class DotComponent {
 		int DamagePerTurn;
@@ -62,11 +50,11 @@ public class Move {
 	int Accuracy;
 	StatusEffect statusInflicted;
 	DotComponent dotComponent;
-	StatChanging statchanged;
+	
 
 	//Constructors
 	public Move(String nome, ELEMENTS element, int damage, int pp, int acc,
-			boolean hitfly, AILMENTS ailment,int inflictchance, STATS stat,int dur, int quantity, int dmgperturn, int dotdur) {
+			boolean hitfly, AILMENTS ailment,int inflictchance,int quantity, int dmgperturn, int dotdur) {
 		Name = nome;
 		ElementType = element;
 		BaseDamage = damage;
@@ -74,7 +62,7 @@ public class Move {
 		Accuracy = acc;
 		statusInflicted = new StatusEffect(ailment,inflictchance);
 		dotComponent = new DotComponent(dmgperturn,dotdur);
-		statchanged = new StatChanging(stat,dur,quantity);
+		
 		hitflyingenemy = hitfly;
 
 	}

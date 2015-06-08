@@ -1,11 +1,9 @@
 package com.lpoo.pokemon.logic;
 
-import java.util.Random;
+import java.util.Random; 
 import java.util.Scanner;
 import java.util.Vector;
 
-import com.lpoo.pokemon.logic.Move.STATS;
-import com.lpoo.pokemon.logic.Move.StatChanging;
 import com.lpoo.pokemon.logic.Move.StatusEffect;
 import com.lpoo.pokemon.logic.Move.DotComponent;
 import com.lpoo.pokemon.logic.Move.AILMENTS;
@@ -17,7 +15,7 @@ public class Pokemon extends PokemonBase {
 	// Fields
 	Vector<Move> moves;
 	Vector<Move.DotComponent> DOT_EFFECTS;
-	Vector<Move.StatChanging> STAT_CH_EFFECTS;
+	
 	public AILMENTS STATUS_EFFECT;
 	boolean dead;
 	boolean active;
@@ -38,11 +36,28 @@ public class Pokemon extends PokemonBase {
 		SpecialDefense = SPD;
 		Speed = ag;
 		DOT_EFFECTS = new Vector<Move.DotComponent>();
-		STAT_CH_EFFECTS = new Vector<Move.StatChanging>();
+	
 		STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
 		active=false;
 	}
-
+	// Constructors
+	public Pokemon(String nome, ELEMENTS element, double HP, 
+			double att, double def, double SPA, double SPD, double ag) {
+		Name = nome;
+		moves = new Vector<Move>();
+		ElementType = element;
+		MaxHitPoints = HP;
+		HitPoints = HP;
+		Attack = att;
+		Defense = def;
+		SpecialAttack = SPA;
+		SpecialDefense = SPD;
+		Speed = ag;
+		DOT_EFFECTS = new Vector<Move.DotComponent>();
+	
+		STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
+		active=false;
+	}
 	public Pokemon(Texture texture, String nome, ELEMENTS element, double HP, 
 			double att, double def, double SPA, double SPD, double ag,
 			Vector<Move> mv) {
@@ -58,7 +73,6 @@ public class Pokemon extends PokemonBase {
 		SpecialDefense = SPD;
 		Speed = ag;
 		DOT_EFFECTS = new Vector<Move.DotComponent>();
-		STAT_CH_EFFECTS = new Vector<Move.StatChanging>();
 		STATUS_EFFECT = Move.AILMENTS.NEUTRAL;
 		active=false; 
 	}
@@ -206,39 +220,7 @@ public class Pokemon extends PokemonBase {
 				// check for dot effects
 				target.DOT_EFFECTS.add(attack.dotComponent);
 
-				// check for stat changing effects
-				if (attack.statchanged.changedstat != STATS.NULL) {
-					STAT_CH_EFFECTS.add(attack.statchanged);
-					switch (attack.statchanged.changedstat) {
-					case ATTACK:
-						target.Attack -= attack.statchanged.quantity;
-						System.out.println(target.Name
-								+ "'s attack has been reduced");
-						break;
-					case DEFENSE:
-						target.Defense -= attack.statchanged.quantity;
-						System.out.println(target.Name
-								+ "'s defense has been reduced");
-						break;
-					case SPECIALATTACK:
-						target.SpecialAttack -= attack.statchanged.quantity;
-						System.out.println(target.Name
-								+ "'s specialattack has been reduced");
-						break;
-					case SPECIALDEFENSE:
-						target.SpecialDefense -= attack.statchanged.quantity;
-						System.out.println(target.Name
-								+ "'s specialdefense has been reduced");
-						break;
-					case SPEED:
-						target.Speed -= attack.statchanged.quantity;
-						System.out.println(target.Name
-								+ "'speed has been reduced");
-						break;
-					default:
-						break;
-					}
-				}
+				
 
 				if (target.HitPoints <= 0) {
 					target.die();
@@ -401,51 +383,6 @@ public class Pokemon extends PokemonBase {
 							+ this.Name);
 					DOT_EFFECTS.get(i).duration--;
 				}
-			}
-
-			// Handle STAT_CH_EFFECTS
-			for (int i = 0; i < STAT_CH_EFFECTS.size(); i++) {
-				if (STAT_CH_EFFECTS.get(i).duration <= 0) {
-					switch (STAT_CH_EFFECTS.get(i).changedstat) {
-					case ATTACK:
-						this.Attack += STAT_CH_EFFECTS.get(i).quantity;
-						System.out.println(this.Name
-								+ " attack stat has returned to normal");
-						STAT_CH_EFFECTS.remove(i);
-						break;
-					case DEFENSE:
-						this.Defense += STAT_CH_EFFECTS.get(i).quantity;
-						System.out.println(this.Name
-								+ " defense stat has returned to normal");
-						STAT_CH_EFFECTS.remove(i);
-						break;
-					case SPECIALATTACK:
-						this.SpecialAttack += STAT_CH_EFFECTS.get(i).quantity;
-						System.out
-								.println(this.Name
-										+ " special attack stat has returned to normal");
-						STAT_CH_EFFECTS.remove(i);
-						break;
-					case SPECIALDEFENSE:
-						this.SpecialDefense += STAT_CH_EFFECTS.get(i).quantity;
-						System.out
-								.println(this.Name
-										+ " special defense stat has returned to normal");
-						STAT_CH_EFFECTS.remove(i);
-						break;
-					case SPEED:
-						this.Speed += STAT_CH_EFFECTS.get(i).quantity;
-						System.out.println(this.Name
-								+ " speed stat has returned to normal");
-						STAT_CH_EFFECTS.remove(i);
-						break;
-					default:
-						break;
-
-					}
-
-				} else
-					STAT_CH_EFFECTS.get(i).duration--;
 			}
 
 			// Handle status effects

@@ -1,6 +1,6 @@
 package com.lpoo.pokemon.screen;
 
-import java.util.Vector;
+import java.util.Vector; 
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -13,7 +13,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Select;
 import com.lpoo.pokemon.MainGame;
 import com.lpoo.pokemon.TextureManager;
-import com.lpoo.pokemon.teste;
 import com.lpoo.pokemon.camera.OrthoCamera;
 import com.lpoo.pokemon.logic.Trainer;
 

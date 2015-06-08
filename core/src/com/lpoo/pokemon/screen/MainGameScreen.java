@@ -34,7 +34,7 @@ import com.lpoo.pokemon.camera.OrthoCamera;
 import com.lpoo.pokemon.logic.Elements;
 import com.lpoo.pokemon.logic.Move;
 import com.lpoo.pokemon.logic.Move.ELEMENTS;
-import com.lpoo.pokemon.logic.Move.STATS;
+
 import com.lpoo.pokemon.logic.Pokemon;
 import com.lpoo.pokemon.logic.Trainer;
 import com.lpoo.pokemon.utilities.ProgressBar;
