@@ -5,16 +5,12 @@ import java.util.Vector;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Input.TextInputListener;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Select;
 import com.lpoo.pokemon.MainGame;
 import com.lpoo.pokemon.TextureManager;
 import com.lpoo.pokemon.camera.OrthoCamera;
-import com.lpoo.pokemon.logic.Trainer;
 
 public class MainMenuScreen extends Screen implements TextInputListener {
 

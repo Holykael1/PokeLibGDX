@@ -1,11 +1,8 @@
 package com.lpoo.pokemon.logic;
 
 import java.util.Random; 
-import java.util.Scanner;
 import java.util.Vector;
 
-import com.lpoo.pokemon.logic.Move.StatusEffect;
-import com.lpoo.pokemon.logic.Move.DotComponent;
 import com.lpoo.pokemon.logic.Move.AILMENTS;
 import com.lpoo.pokemon.logic.Move.ELEMENTS;
 import com.lpoo.pokemon.logic.PokemonBase;

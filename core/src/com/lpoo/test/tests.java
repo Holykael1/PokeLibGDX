@@ -6,13 +6,11 @@ import java.util.Vector;
 
 import org.junit.Test;
 
-import com.lpoo.pokemon.TextureManager;
 import com.lpoo.pokemon.logic.Move;
 import com.lpoo.pokemon.logic.Pokemon;
 import com.lpoo.pokemon.logic.Move.AILMENTS;
 import com.lpoo.pokemon.logic.Move.ELEMENTS;
 import com.lpoo.pokemon.logic.Trainer;
-import com.sun.xml.internal.ws.message.FaultMessage;
 
 public class tests {
 

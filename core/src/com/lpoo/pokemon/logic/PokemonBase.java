@@ -1,7 +1,5 @@
 package com.lpoo.pokemon.logic;
 
-import java.util.Vector;
-
 import com.badlogic.gdx.graphics.Texture;
 
 import com.lpoo.pokemon.logic.Move.ELEMENTS;
